@@ -18,6 +18,7 @@ public class Samuel extends Character {
 
     }
 
+
     public void nextPosition(){
 
     }
