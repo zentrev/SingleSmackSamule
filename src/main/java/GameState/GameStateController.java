@@ -21,8 +21,8 @@ public class GameStateController {
 
         gameStates = new HashMap<Integer, GameState>();
         currentState = 0;
-        gameStates.put(0,new MenuState(this));
-        gameStates.put(1,new RoomState(this));
+        gameStates.put(MENUSTATE,new MenuState(this));
+        gameStates.put(ROOMSTATE,new RoomState(this));
 
     }
 
