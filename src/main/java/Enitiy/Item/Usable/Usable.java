@@ -2,9 +2,9 @@ package Enitiy.Item.Usable;
 
 import Enitiy.Item.Item;
 
-public class Usable extends Item {
+public class Usable extends Item{
 
-    private int useLocation;
+    private useLocation useLocation;
 
     public void update(){
 
