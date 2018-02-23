@@ -27,8 +27,8 @@ public class RoomState extends GameState {
 
         bg = new Background("/Assets/maxresdefault.jpg", 01);
 
-        sam = new Samuel(tileMap);
-        sam.setPosition(100,100);
+//        sam = new Samuel(tileMap);
+//        sam.setPosition(100,100);
 
 
     }
