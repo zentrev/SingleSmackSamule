@@ -3,18 +3,12 @@ package Limbo;
 import GameState.GameStateController;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
-import java.util.Collections;
 
 public class Game extends Stage implements Runnable, EventHandler{
 
@@ -56,7 +50,7 @@ public class Game extends Stage implements Runnable, EventHandler{
         }
         this.setFocused(true);
         this.requestFocus();
-        this.addEventFilter(Event.ANY, this);
+        this.addEventFilter(KeyEvent.ANY, this);
     }
 
 
@@ -75,7 +69,6 @@ public class Game extends Stage implements Runnable, EventHandler{
 
             update();
             draw();
-            drawToScreen();
 
             elapsed = System.nanoTime() - start;
             wait = targetTime - elapsed/1000000;
@@ -92,19 +85,15 @@ public class Game extends Stage implements Runnable, EventHandler{
     }
 
     public void init(){
-
+        gsc = new GameStateController();
     }
 
     public void update(){
-
+        gsc.update();
     }
     public void draw(){
         gsc.draw(gc);
     }
-    public void drawToScreen(){
-
-    }
-
 
     @Override
     public void handle(Event event) {

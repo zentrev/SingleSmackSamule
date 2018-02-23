@@ -1,12 +1,17 @@
 package TileMap;
 
 import Limbo.Game;
+import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -34,7 +39,7 @@ public class TileMap {
     private int height;
 
     // tileset
-    private Image tileset;
+    private BufferedImage tileset;
     private int numTilesAcross;
     private Tile[][] tiles;
 
@@ -60,9 +65,9 @@ public class TileMap {
             tiles = new Tile[2][numTilesAcross];
             Image subimage;
             for(int col = 0; col < numTilesAcross; col++){
-                subimage = tileset.getSubimage(col * tileSize, 0, tileSize, tileSize);
+                subimage = SwingFXUtils.toFXImage(tileset.getSubimage(col * tileSize, 0, tileSize, tileSize),null);
                 tiles[0][col] = new Tile(subimage, Tile.NORMAL);
-                subimage = tileset.getSubimage(col*tileSize,tileSize,tileSize,tileSize);
+                subimage = SwingFXUtils.toFXImage(tileset.getSubimage(col*tileSize,tileSize,tileSize,tileSize),null);
                 tiles[1][col] = new Tile(subimage, Tile.BLOCKED);
             }
 
@@ -142,9 +147,6 @@ public class TileMap {
         rowOffset = (int)-this.y / tileSize;
     }
 
-    public void setTween(double tween){
-        this.tween = tween;
-    }
 
     private void fixBounds(){
         if(x < xmin) x = xmin;
@@ -153,7 +155,7 @@ public class TileMap {
         if(y > ymax) y = ymax;
     }
 
-    public void draw(Graphics2D g){
+    public void draw(GraphicsContext g){
         for(int row = rowOffset; row < rowOffset + numRowsToDraw; row++){
             if(row >= numRows)break;
             for(int col = colOffset; col < colOffset + numColsToDraw; col++){
@@ -164,7 +166,7 @@ public class TileMap {
                 int r = rc / numTilesAcross;
                 int c = rc % numTilesAcross;
 
-                g.drawImage(tiles[r][c].getImage(),(int)x + col * tileSize,(int)y + row * tileSize, null);
+                g.drawImage(tiles[r][c].getImage(),(int)x + col * tileSize,(int)y + row * tileSize,tileSize,tileSize);
             }
         }
     }
