@@ -29,6 +29,7 @@ public class Samuel extends Character {
 
     public void draw(){
 
+
     }
 
     public static int getIDLE() {
