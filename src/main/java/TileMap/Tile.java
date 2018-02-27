@@ -1,27 +1,33 @@
 package TileMap;
 
-
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
-public class Tile {
+public class Tile extends ImageView{
 
-    private Image image;
-    private int type;
+    private TileType tileType;
 
-    // tile types
-    public static final int NORMAL = 0;
-    public static final int BLOCKED = 1;
-
-    public Tile(Image image, int type) {
-        this.image = image;
-        this.type = type;
+    public Tile(Image image, int x, int y, int tilesize, TileType tileType){
+        super();
+        this.setImage(image);
+        this.setTranslateX(x);
+        this.setTranslateY(y);
+        this.minHeight(tilesize);
+        this.minWidth(tilesize);
+        this.prefHeight(tilesize);
+        this.prefWidth(tilesize);
+        this.maxHeight(tilesize);
+        this.maxWidth(tilesize);
+        this.setFitHeight(tilesize);
+        this.setFitWidth(tilesize);
+        this.setTileType(tileType);
     }
 
-    public Image getImage() {
-        return image;
+    public TileType getTileType() {
+        return tileType;
     }
 
-    public int getType() {
-        return type;
+    public void setTileType(TileType tileType) {
+        this.tileType = tileType;
     }
 }
