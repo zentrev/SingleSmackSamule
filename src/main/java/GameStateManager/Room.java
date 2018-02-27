@@ -39,7 +39,6 @@ public class Room {
     // Tile Size
     public static final int tileSize = 80;
 
-
     public Room(String mapPath) {
         this.mapPath = mapPath;
     }
