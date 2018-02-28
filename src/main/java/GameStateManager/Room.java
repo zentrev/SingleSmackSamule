@@ -1,6 +1,8 @@
 package GameStateManager;
 
 import Entity.Events.DoorWay;
+import Entity.Monster.Monster;
+import Entity.Monster.MonsterFactory;
 import Entity.Samuel;
 import Logic.Game;
 import TileMap.Tile;
@@ -27,8 +29,6 @@ public class Room {
     private int numCols;
     private int numRows;
 
-    private int numDoors;
-
     private int width;
     private int height;
 
@@ -41,6 +41,9 @@ public class Room {
     private HashMap<Integer, Image> tileSheet;
 
     private ArrayList<DoorWay> doorWays;
+    private int numDoors;
+    private ArrayList<Monster> monsters;
+    private int numOfMonsters;
 
     // Tile Size
     public static final int tileSize = 80;
@@ -98,9 +101,26 @@ public class Room {
                 int samx = Integer.parseInt(tokens[3]);
                 int samy = Integer.parseInt(tokens[4]);
                 DoorWay thisDoor = new DoorWay(tileMap,roomDest,doorx,doory,samx,samy);
-                System.out.println(thisDoor.getBoundsInParent());
                 doorWays.add(thisDoor);
             }
+
+            MonsterFactory MF = new MonsterFactory();
+
+            monsters = new ArrayList<>();
+            numOfMonsters = Integer.parseInt(br.readLine());
+            for(int monster = 0; monster < numOfMonsters; monster++){
+                String monsterLine = br.readLine();
+                String[] tokens = monsterLine.split(delims);
+                int monsterNum = Integer.parseInt(tokens[0]);
+                int monx = Integer.parseInt(tokens[1]);
+                int mony = Integer.parseInt(tokens[2]);
+                Monster thisMonster = MF.getMonster(tileMap, monsterNum,monx,mony);
+                monsters.add(thisMonster);
+                System.out.println(thisMonster.getBoundsInParent());
+                gamePane.getChildren().add(thisMonster);
+            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -152,6 +172,9 @@ public class Room {
             if (door.getBoundsInParent().intersects(RoomState.sam.getBoundsInParent())){
                 door.comitEvent();
             }
+        }
+        for(Monster monster : monsters){
+            monster.update();
         }
     }
 
