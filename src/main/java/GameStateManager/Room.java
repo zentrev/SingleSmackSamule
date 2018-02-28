@@ -176,6 +176,7 @@ public class Room {
         for(Monster monster : monsters){
             monster.update();
         }
+        for
     }
 
     public Tile[][] getTileMap() {
