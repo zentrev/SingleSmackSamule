@@ -1,5 +1,6 @@
 package GameStateManager;
 
+import Entity.Events.DoorWay;
 import Entity.Samuel;
 import Logic.Game;
 import TileMap.Tile;
@@ -13,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Room {
@@ -25,6 +27,8 @@ public class Room {
     private int numCols;
     private int numRows;
 
+    private int numDoors;
+
     private int width;
     private int height;
 
@@ -35,6 +39,8 @@ public class Room {
     private boolean active = false;
 
     private HashMap<Integer, Image> tileSheet;
+
+    private ArrayList<DoorWay> doorWays;
 
     // Tile Size
     public static final int tileSize = 80;
@@ -60,6 +66,7 @@ public class Room {
             gamePane.setPrefHeight(height);
 
 
+
             String delims = "\\s+";
             for (int row = 0; row < numRows; row++) {
                 String line = br.readLine();
@@ -79,10 +86,26 @@ public class Room {
                     gamePane.getChildren().add(tileMap[row][col]);
                 }
             }
+
+            doorWays = new ArrayList<>();
+            numDoors = Integer.parseInt(br.readLine());
+            for(int door = 0; door < numDoors; door++){
+                String doorLine = br.readLine();
+                String[] tokens = doorLine.split(delims);
+                int roomDest = Integer.parseInt(tokens[0]);
+                int doorx = Integer.parseInt(tokens[1]);
+                int doory = Integer.parseInt(tokens[2]);
+                int samx = Integer.parseInt(tokens[3]);
+                int samy = Integer.parseInt(tokens[4]);
+                DoorWay thisDoor = new DoorWay(tileMap,roomDest,doorx,doory,samx,samy);
+                System.out.println(thisDoor.getBoundsInParent());
+                doorWays.add(thisDoor);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
     private void stampTileSheet() {
         try {
@@ -122,6 +145,14 @@ public class Room {
             gamePane.setTranslateY((gamePane.getHeight()*-1)+Game.HEIGHT);
         }
         active = true;
+    }
+
+    public void update(){
+        for(DoorWay door : doorWays){
+            if (door.getBoundsInParent().intersects(RoomState.sam.getBoundsInParent())){
+                door.comitEvent();
+            }
+        }
     }
 
     public Tile[][] getTileMap() {

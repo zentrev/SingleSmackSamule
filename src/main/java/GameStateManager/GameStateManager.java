@@ -21,14 +21,16 @@ public class GameStateManager {
         ROOMSTATE
     }
 
+    public static MenuState MENU;
+    public static RoomState ROOM;
 
     public GameStateManager(Pane gamePane){
 
         this.gamePane = gamePane;
 
         gameStates = new HashMap<STATE, GameState>();
-        gameStates.put(MENUSTATE, new MenuState(this));
-        gameStates.put(ROOMSTATE,new RoomState(this));
+        gameStates.put(MENUSTATE, MENU = new MenuState(this));
+        gameStates.put(ROOMSTATE, ROOM = new RoomState(this));
         setState(MENUSTATE);
 
     }

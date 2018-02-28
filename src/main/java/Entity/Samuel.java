@@ -9,8 +9,8 @@ import javafx.scene.input.KeyEvent;
 public class Samuel extends Entity {
     public Samuel(Tile[][] tileMap) {
         super(tileMap);
-        height = 65;
-        width = 65;
+        height = 64;
+        width = 64;
         x = 100;
         y = 700;
         moveSpeed = 6;
@@ -26,6 +26,15 @@ public class Samuel extends Entity {
         setFitWidth(width);
         collionHeight = height;
         collionWidth = width;
+    }
+
+    public void loadSam(Tile[][] tileMap, int samX, int samY){
+        this.tileMap = tileMap;
+        this.x = samX;
+        this.y = samY;
+
+        this.setTranslateX(x);
+        this.setTranslateY(y);
     }
 
     public void update() {
