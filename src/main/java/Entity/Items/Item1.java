@@ -3,7 +3,7 @@ package Entity.Items;
 import TileMap.Tile;
 import javafx.scene.image.Image;
 
-public class Item1 extends DisposableItems {
+public class Item1 extends Item {
 
     public Item1(Tile[][] tm, double itemx, double itemy){
         super(tm);

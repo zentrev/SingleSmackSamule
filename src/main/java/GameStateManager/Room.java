@@ -44,6 +44,7 @@ public class Room {
     private int numDoors;
     private ArrayList<Monster> monsters;
     private int numOfMonsters;
+    private ArrayList<>
 
     // Tile Size
     public static final int tileSize = 80;
@@ -119,6 +120,24 @@ public class Room {
                 System.out.println(thisMonster.getBoundsInParent());
                 gamePane.getChildren().add(thisMonster);
             }
+
+            ItemFactory IF = new ItemFacotry();
+
+            monsters = new ArrayList<>();
+            numOfMonsters = Integer.parseInt(br.readLine());
+            for(int monster = 0; monster < numOfMonsters; monster++){
+                String monsterLine = br.readLine();
+                String[] tokens = monsterLine.split(delims);
+                int monsterNum = Integer.parseInt(tokens[0]);
+                int monx = Integer.parseInt(tokens[1]);
+                int mony = Integer.parseInt(tokens[2]);
+                Monster thisMonster = MF.getMonster(tileMap, monsterNum,monx,mony);
+                monsters.add(thisMonster);
+                System.out.println(thisMonster.getBoundsInParent());
+                gamePane.getChildren().add(thisMonster);
+            }
+
+
 
 
         } catch (Exception e) {

@@ -13,12 +13,12 @@ public class mon1 extends Monster {
         this.x = monx;
         this.y = mony;
 
-        moveSpeed = 3;
+        moveSpeed = 4;
         height = 64;
         width = 64;
         collionHeight = height;
         collionWidth = width;
-        fallSpeed = 5;
+        fallSpeed =8;
 
         this.setFitHeight(height);
         this.setFitWidth(width);
