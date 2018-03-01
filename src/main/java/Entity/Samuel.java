@@ -40,7 +40,7 @@ public class Samuel extends Entity {
         collionHeight = height;
         collionWidth = width;
         numFrames = new int[]{
-                2
+                8
         };
         try {
             BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Assets/SpriteSheets/Google_Ultron.png"));
@@ -48,7 +48,7 @@ public class Samuel extends Entity {
             for (int i = 0; i < numFrames.length; i++) {
                 Image[] sprit = new Image[numFrames[i]];
                 for (int j = 0; j < numFrames[i]; j++) {
-                    sprit[j] = SwingFXUtils.toFXImage(spritesheet.getSubimage(j * 256, i * 512, 256, 512), null);
+                    sprit[j] = SwingFXUtils.toFXImage(spritesheet.getSubimage(j * 64, i * 512, 64, 512), null);
                 }
                 sprites.add(sprit);
 
@@ -60,7 +60,7 @@ public class Samuel extends Entity {
         this.animation = new Animator();
         this.currentAction = IDLE;
         animation.setFrames(sprites.get(IDLE));
-        animation.setDelay(400);
+        animation.setDelay(150);
         this.setImage(animation.getImage());
 
     }
