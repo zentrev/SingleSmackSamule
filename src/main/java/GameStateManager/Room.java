@@ -143,8 +143,8 @@ public class Room {
             Image subimage;
             for (int col = 0; col < numTilesDown; col++) {
                 for (int row = 0; row < numTilesAcross; row++) {
-                    subimage = SwingFXUtils.toFXImage(tileset.getSubimage(col * tileSize, row * tileSize, tileSize, tileSize), null);
-                    tileSheet.put((col) + row * numTilesAcross, subimage);
+                    subimage = SwingFXUtils.toFXImage(tileset.getSubimage(row * tileSize, col * tileSize, tileSize, tileSize), null);
+                    tileSheet.put((row) + col * numTilesAcross, subimage);
                 }
             }
 

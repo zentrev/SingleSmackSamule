@@ -17,7 +17,7 @@ public class GameStateManager {
 
     public static enum STATE {
         MENUSTATE,
-        SETTINGS,
+        SETTIGS,
         ROOMSTATE
     }
 
