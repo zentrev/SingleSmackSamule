@@ -37,6 +37,10 @@ public class Game extends Stage implements EventHandler{
         this.setScene(scene);
         running = true;
 
+        this.setMaxWidth(this.WIDTH*SCALE);
+        this.setMaxHeight(this.HEIGHT*SCALE);
+        this.setResizable(false);
+
         this.setFocused(true);
         this.requestFocus();
         this.addEventFilter(KeyEvent.ANY, this);

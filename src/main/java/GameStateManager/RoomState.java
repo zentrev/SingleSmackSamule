@@ -20,14 +20,13 @@ public class RoomState extends GameState {
         super(gsm);
         for (int i = 0; i < NUMBEROFROOMS; i++) {
             rooms.add(new Room("/Assets/Maps/room" + i + ".map"));
-            System.out.println(rooms.get(i).getTileMap());
+            rooms.get(i).init(gsm.getGamePane());
         }
         currentRoom = 0;
 
     }
 
     public void changeRoom(int roomNumber, int samX, int samY) {
-        System.out.println("changing");
         gsm.getGamePane().getChildren().clear();
         currentRoom = roomNumber;
         rooms.get(currentRoom).init(gsm.getGamePane());
@@ -54,6 +53,7 @@ public class RoomState extends GameState {
         rooms.get(currentRoom).init(gamePane);
         sam = new Samuel(rooms.get(currentRoom).getTileMap());
         gsm.getGamePane().getChildren().add(sam);
+
     }
 
     @Override
@@ -65,6 +65,7 @@ public class RoomState extends GameState {
     @Override
     public void draw(Pane gamePane) {
         rooms.get(currentRoom).draw(gamePane, sam);
+        sam.draw();
     }
 
     @Override

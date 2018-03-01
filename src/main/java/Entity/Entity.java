@@ -2,7 +2,10 @@ package Entity;
 
 import GameStateManager.Room;
 import TileMap.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.util.ArrayList;
 
 abstract public class Entity extends ImageView {
 
@@ -45,6 +48,10 @@ abstract public class Entity extends ImageView {
     protected double maxFallSpeed;
 
     protected double jumpStartVelecity;
+
+    protected Animator animation;
+    protected ArrayList<Image[]> sprites;
+    protected int[] numFrames;
 
     public Entity(Tile[][] tileMap) {
         this.setTileMap(tileMap);

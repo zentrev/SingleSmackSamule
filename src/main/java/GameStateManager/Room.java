@@ -1,6 +1,8 @@
 package GameStateManager;
 
 import Entity.Events.DoorWay;
+import Entity.Items.Item;
+import Entity.Items.ItemFactory;
 import Entity.Monster.Monster;
 import Entity.Monster.MonsterFactory;
 import Entity.Samuel;
@@ -44,7 +46,9 @@ public class Room {
     private int numDoors;
     private ArrayList<Monster> monsters;
     private int numOfMonsters;
-    private ArrayList<>
+    private ArrayList<Item> items;
+    private int numOfItems;
+    private ArrayList<Item> collectedItems;
 
     // Tile Size
     public static final int tileSize = 80;
@@ -117,25 +121,9 @@ public class Room {
                 int mony = Integer.parseInt(tokens[2]);
                 Monster thisMonster = MF.getMonster(tileMap, monsterNum,monx,mony);
                 monsters.add(thisMonster);
-                System.out.println(thisMonster.getBoundsInParent());
                 gamePane.getChildren().add(thisMonster);
             }
 
-            ItemFactory IF = new ItemFacotry();
-
-            monsters = new ArrayList<>();
-            numOfMonsters = Integer.parseInt(br.readLine());
-            for(int monster = 0; monster < numOfMonsters; monster++){
-                String monsterLine = br.readLine();
-                String[] tokens = monsterLine.split(delims);
-                int monsterNum = Integer.parseInt(tokens[0]);
-                int monx = Integer.parseInt(tokens[1]);
-                int mony = Integer.parseInt(tokens[2]);
-                Monster thisMonster = MF.getMonster(tileMap, monsterNum,monx,mony);
-                monsters.add(thisMonster);
-                System.out.println(thisMonster.getBoundsInParent());
-                gamePane.getChildren().add(thisMonster);
-            }
 
 
 
@@ -153,7 +141,6 @@ public class Room {
             numTilesAcross = (int) tileset.getWidth() / tileSize;
             numTilesDown = (int) tileset.getHeight() / tileSize;
             Image subimage;
-            System.out.println(numTilesAcross + " : " + numTilesDown);
             for (int col = 0; col < numTilesDown; col++) {
                 for (int row = 0; row < numTilesAcross; row++) {
                     subimage = SwingFXUtils.toFXImage(tileset.getSubimage(col * tileSize, row * tileSize, tileSize, tileSize), null);
@@ -195,7 +182,7 @@ public class Room {
         for(Monster monster : monsters){
             monster.update();
         }
-        for
+        //for
     }
 
     public Tile[][] getTileMap() {

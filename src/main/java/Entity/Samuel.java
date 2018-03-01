@@ -1,12 +1,26 @@
 package Entity;
 
 import TileMap.Tile;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.Event;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.ArrayList;
+
 
 public class Samuel extends Entity {
+
+    private int currentAction;
+
+    private static final int IDLE = 0;
+    private static final int WALKING = 1;
+    private static final int JUMPING = 2;
+    private static final int FALLING = 3;
+
     public Samuel(Tile[][] tileMap) {
         super(tileMap);
         height = 64;
@@ -19,16 +33,39 @@ public class Samuel extends Entity {
         fallSpeed = .5;
         maxFallSpeed = 8;
         jumpStartVelecity = -13;
-        this.setImage(new Image("/Assets/SpriteSheets/Google_Ultron.png"));
         setTranslateX(x);
         setTranslateY(y);
         setFitHeight(height);
         setFitWidth(width);
         collionHeight = height;
         collionWidth = width;
+        numFrames = new int[]{
+                2
+        };
+        try {
+            BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Assets/SpriteSheets/Google_Ultron.png"));
+            sprites = new ArrayList<Image[]>();
+            for (int i = 0; i < numFrames.length; i++) {
+                Image[] sprit = new Image[numFrames[i]];
+                for (int j = 0; j < numFrames[i]; j++) {
+                    sprit[j] = SwingFXUtils.toFXImage(spritesheet.getSubimage(j * 256, i * 512, 256, 512), null);
+                }
+                sprites.add(sprit);
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.animation = new Animator();
+        this.currentAction = IDLE;
+        animation.setFrames(sprites.get(IDLE));
+        animation.setDelay(400);
+        this.setImage(animation.getImage());
+
     }
 
-    public void loadSam(Tile[][] tileMap, int samX, int samY){
+    public void loadSam(Tile[][] tileMap, int samX, int samY) {
         this.tileMap = tileMap;
         this.x = samX;
         this.y = samY;
@@ -44,7 +81,7 @@ public class Samuel extends Entity {
 
     }
 
-    public void checkCollision(){
+    public void checkCollision() {
         super.checkCollision();
     }
 
@@ -85,16 +122,12 @@ public class Samuel extends Entity {
 
     private void changeVelocity() {
 
-
-
-
-
         if (fallingOption) {
             if (yVelocity < maxFallSpeed) {
                 yVelocity += fallSpeed;
             }
         } else {
-            if(yVelocity >= 0){
+            if (yVelocity >= 0) {
                 yVelocity = 0;
             }
         }
@@ -106,13 +139,13 @@ public class Samuel extends Entity {
         }
 
         if (!upOption) {
-            setTranslateY(getTranslateY()-(yVelocity)+5);
+            setTranslateY(getTranslateY() - (yVelocity) + 5);
             yVelocity = 0;
         }
 
         if (leftOption) {
             if (left) {
-                xVelocity = maxSpeed*-1;
+                xVelocity = maxSpeed * -1;
             }
         } else {
             xVelocity = 0;
@@ -157,7 +190,8 @@ public class Samuel extends Entity {
         }
     }
 
-    public void draw(){
-
+    public void draw() {
+        this.animation.update();
+        this.setImage(animation.getImage());
     }
 }

@@ -18,7 +18,8 @@ public class mon1 extends Monster {
         width = 64;
         collionHeight = height;
         collionWidth = width;
-        fallSpeed =8;
+        fallSpeed = .5;
+        maxFallSpeed = 8;
 
         this.setFitHeight(height);
         this.setFitWidth(width);
@@ -55,7 +56,6 @@ public class mon1 extends Monster {
             movingLeft = true;
         }
         if(fallingOption){
-            yVelocity = fallSpeed;
             y += yVelocity;
             this.setTranslateY(y);
         }
@@ -66,6 +66,15 @@ public class mon1 extends Monster {
             xVelocity = moveSpeed*-1;
         } else {
             xVelocity = moveSpeed;
+        }
+        if (fallingOption) {
+            if (yVelocity < maxFallSpeed) {
+                yVelocity += fallSpeed;
+            }
+        } else {
+            if(yVelocity >= 0){
+                yVelocity = 0;
+            }
         }
     }
 
