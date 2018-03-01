@@ -124,9 +124,24 @@ public class Room {
                 gamePane.getChildren().add(thisMonster);
             }
 
+            ItemFactory IF = new ItemFactory();
 
-
-
+            items = new ArrayList<>();
+            numOfItems = Integer.parseInt(br.readLine());
+            for(int item = 0; item < numOfMonsters; item++){
+                String itemLine = br.readLine();
+                String[] tokens = itemLine.split(delims);
+                int itemNum = Integer.parseInt(tokens[0]);
+                int itemx = Integer.parseInt(tokens[1]);
+                int itemy = Integer.parseInt(tokens[2]);
+                Item thisItem = IF.getItem(tileMap, itemNum,itemx,itemy);
+                items.add(thisItem);
+                for(Item checkItem : items) {
+                    if(!collectedItems.contains(checkItem)) {
+                        gamePane.getChildren().add(thisItem);
+                    }
+                }
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
