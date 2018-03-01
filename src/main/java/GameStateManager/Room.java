@@ -128,7 +128,7 @@ public class Room {
 
             items = new ArrayList<>();
             numOfItems = Integer.parseInt(br.readLine());
-            for(int item = 0; item < numOfMonsters; item++){
+            for(int item = 0; item < numOfItems; item++){
                 String itemLine = br.readLine();
                 String[] tokens = itemLine.split(delims);
                 int itemNum = Integer.parseInt(tokens[0]);
