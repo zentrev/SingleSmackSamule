@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Room {
 
@@ -199,12 +200,15 @@ public class Room {
     }
 
     public void checkMonsterCollision(Rectangle attackBound){
+        List<Monster> toRemove = new ArrayList<>();
         for(Monster monster : monsters){
             if(monster.getBoundsInParent().intersects(attackBound.getBoundsInParent())){
                 System.out.println("he ded");
+                toRemove.add(monster);
                 gsm.getGamePane().getChildren().remove(monster);
             }
         }
+        monsters.removeAll(toRemove);
     }
 
     public void draw(Pane gamePane, Samuel sam) {
