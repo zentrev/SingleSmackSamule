@@ -3,6 +3,8 @@ package Entity.Monster;
 import TileMap.Tile;
 import javafx.scene.image.Image;
 
+import static GameStateManager.RoomState.sam;
+
 public class mon1 extends Monster {
 
     public boolean movingLeft;
@@ -35,8 +37,21 @@ public class mon1 extends Monster {
 
         changeVelocity();
         checkCollision();
-        moveVelocity();
+        if(!checkAttacking()) {
+            moveVelocity();
+        }
 
+    }
+
+    public boolean checkAttacking(){
+        if(sam.getBoundsInParent().intersects(this.getBoundsInParent()) && !sam.invince){
+            sam.HEALTH += -1;
+            sam.flinch(System.nanoTime());
+            System.out.println(sam.HEALTH);
+
+            return true;
+        }
+        return false;
     }
 
     public void moveVelocity(){

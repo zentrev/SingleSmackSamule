@@ -1,5 +1,6 @@
 package Entity;
 
+import Entity.Items.Item;
 import GameStateManager.Room;
 import GameStateManager.RoomState;
 import TileMap.Tile;
@@ -21,7 +22,8 @@ public class Samuel extends Entity {
     private int currentAction;
     private RoomState roomState;
 
-    public static int HEALTH = 3;
+    public int HEALTH = 3;
+    public ArrayList<Item> samsItems;
 
     private static final int IDLE = 0;
     private static final int WALKING = 1;
@@ -30,9 +32,13 @@ public class Samuel extends Entity {
 
     private long startTime;
 
+    private boolean flinching;
+    public boolean invince;
+
     public Samuel(Tile[][] tileMap,RoomState roomState) {
         super(tileMap);
         this.roomState = roomState;
+        samsItems = new ArrayList<>();
         height = 64;
         width = 64;
         x = 100;
@@ -86,10 +92,14 @@ public class Samuel extends Entity {
     }
 
     public void update() {
-        changeVelocity();
-        checkCollision();
-        checkAttacking();
-        moveVelocity();
+        if(HEALTH > 0) {
+            changeVelocity();
+            checkCollision();
+            checkAttacking();
+            checkFlinching();
+            moveVelocity();
+        }
+
 
     }
 
@@ -132,7 +142,7 @@ public class Samuel extends Entity {
         } else {
             jumpingOption = true;
         }
-        if (!atacking) {
+        if (!atacking && !flinching) {
             if (jumpingOption) {
                 if (jumping) {
                     yVelocity = jumpStartVelecity;
@@ -254,6 +264,23 @@ public class Samuel extends Entity {
             this.setScaleX(-1);
         } else {
             this.setScaleX(1);
+        }
+    }
+
+    public void flinch(Long startTime){
+        this.startTime = startTime;
+        flinching = true;
+        invince = true;
+    }
+
+    public void checkFlinching(){
+        int flinchTime = 400;
+        int invinceTime = 1000;
+        long elapse = (System.nanoTime()-startTime)/1000000;
+        if(elapse>flinchTime){
+            flinching = false;
+        } if(elapse>invinceTime){
+            invince = false;
         }
     }
 }
