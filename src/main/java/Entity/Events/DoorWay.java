@@ -63,4 +63,5 @@ public class DoorWay extends Event {
     public void setSamYDest(double samYDest) {
         this.samYDest = samYDest;
     }
+
 }

@@ -1,6 +1,8 @@
 package GameStateManager;
 
 import Entity.Events.DoorWay;
+import Entity.Events.Event;
+import Entity.Events.EventFactory;
 import Entity.Items.Item;
 import Entity.Items.ItemFactory;
 import Entity.Monster.Monster;
@@ -49,6 +51,9 @@ public class Room {
     private ArrayList<Item> items;
     private int numOfItems;
     private ArrayList<Item> collectedItems;
+    private ArrayList<Event> events;
+    private int numOfEvents;
+    private ArrayList<Event> activatedEvents;
 
     // Tile Size
     public static final int tileSize = 80;
@@ -135,10 +140,30 @@ public class Room {
                 int itemx = Integer.parseInt(tokens[1]);
                 int itemy = Integer.parseInt(tokens[2]);
                 Item thisItem = IF.getItem(tileMap, itemNum,itemx,itemy);
-                items.add(thisItem);
                 for(Item checkItem : items) {
                     if(!collectedItems.contains(checkItem)) {
+                        items.add(thisItem);
                         gamePane.getChildren().add(thisItem);
+                    }
+                }
+            }
+
+            EventFactory EF = new EventFactory();
+
+
+            events = new ArrayList<>();
+            numOfEvents = Integer.parseInt(br.readLine());
+            for(int item = 0; item < numOfEvents; item++){
+                String eventLine = br.readLine();
+                String[] tokens = eventLine.split(delims);
+                int eventNum = Integer.parseInt(tokens[0]);
+                int eventx = Integer.parseInt(tokens[1]);
+                int eventy = Integer.parseInt(tokens[2]);
+                Event thisEvent = EF.getEvent(tileMap, eventNum,eventx,eventy);
+                events.add(thisEvent);
+                for(Event event : events) {
+                    if(!activatedEvents.contains(event)) {
+                        event.setActivatedOnce(true);
                     }
                 }
             }
@@ -197,7 +222,12 @@ public class Room {
         for(Monster monster : monsters){
             monster.update();
         }
-        //for
+        for(Item item : items){
+            item.update();
+        }
+        for(Event event : events){
+            event.update();
+        }
     }
 
     public Tile[][] getTileMap() {

@@ -44,7 +44,7 @@ public class Animator{
             currentFrame = 0;
             playedOnce = true;
         }
-
+        System.out.println(currentFrame);
 
     }
 

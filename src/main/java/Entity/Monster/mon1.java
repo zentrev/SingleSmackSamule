@@ -1,6 +1,5 @@
 package Entity.Monster;
 
-import GameStateManager.Room;
 import TileMap.Tile;
 import javafx.scene.image.Image;
 

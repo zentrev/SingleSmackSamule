@@ -40,15 +40,15 @@ public class Samuel extends Entity {
         collionHeight = height;
         collionWidth = width;
         numFrames = new int[]{
-                2
+                4
         };
         try {
-            BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Assets/SpriteSheets/Google_Ultron.png"));
+            BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Assets/SpriteSheets/testSam.png"));
             sprites = new ArrayList<Image[]>();
             for (int i = 0; i < numFrames.length; i++) {
                 Image[] sprit = new Image[numFrames[i]];
                 for (int j = 0; j < numFrames[i]; j++) {
-                    sprit[j] = SwingFXUtils.toFXImage(spritesheet.getSubimage(j * 256, i * 512, 256, 512), null);
+                    sprit[j] = SwingFXUtils.toFXImage(spritesheet.getSubimage(j * 64, i * 64, 64, 64), null);
                 }
                 sprites.add(sprit);
 
