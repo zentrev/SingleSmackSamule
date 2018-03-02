@@ -3,12 +3,14 @@ package Entity;
 import Entity.Items.Item;
 import GameStateManager.Room;
 import GameStateManager.RoomState;
+import Logic.Game;
 import TileMap.Tile;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.Event;
 import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
 import javax.imageio.ImageIO;
@@ -21,6 +23,8 @@ public class Samuel extends Entity {
 
     private int currentAction;
     private RoomState roomState;
+
+    private Pane UIPane;
 
     public int HEALTH = 3;
     public ArrayList<Item> samsItems;
@@ -38,6 +42,7 @@ public class Samuel extends Entity {
     public Samuel(Tile[][] tileMap,RoomState roomState) {
         super(tileMap);
         this.roomState = roomState;
+        UIPane = Game.UIPane;
         samsItems = new ArrayList<>();
         height = 64;
         width = 64;
@@ -98,9 +103,14 @@ public class Samuel extends Entity {
             checkAttacking();
             checkFlinching();
             moveVelocity();
+            updateUI();
         }
+    }
 
-
+    private void updateUI(){
+        UIPane.getChildren().clear();
+        //add things to ui
+        UIPane.getChildren().addAll();
     }
 
     private void checkAttacking() {
