@@ -26,12 +26,14 @@ public class Game extends Stage implements EventHandler{
     private Pane gamePane;
     public static ImageView backgroundPane;
     private Pane rootPane;
+    public static Pane UIPane;
 
 
     public Game(){
         this.setTitle("Single Smack Samuel");
         gamePane = new Pane();
         rootPane = new Pane();
+        UIPane = new Pane();
         backgroundPane = new ImageView();
         backgroundPane.setFitHeight(HEIGHT*SCALE);
         backgroundPane.setFitWidth(WIDTH*SCALE);
@@ -39,6 +41,7 @@ public class Game extends Stage implements EventHandler{
         rootPane.setPrefWidth(this.WIDTH*SCALE);
         rootPane.getChildren().add(backgroundPane);
         rootPane.getChildren().add(gamePane);
+        rootPane.getChildren().addAll(UIPane);
         Scene scene = new Scene(rootPane);
         scene.setOnKeyPressed(this);
         this.setScene(scene);
