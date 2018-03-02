@@ -1,6 +1,7 @@
 package GameStateManager;
 
 import javafx.event.Event;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -31,6 +32,8 @@ public class MenuState extends GameState{
             text.setY(50+(i*20));
             gamePane.getChildren().add(text);
         }
+
+        gsm.setBackground(new Image(getClass().getResourceAsStream("/Assets/SpriteSheets/Google_Ultron.png")));
 
 
     }

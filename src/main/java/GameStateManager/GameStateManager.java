@@ -1,6 +1,9 @@
 package GameStateManager;
 
+import Logic.Game;
 import javafx.event.Event;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 import java.util.HashMap;
@@ -39,6 +42,13 @@ public class GameStateManager {
         currentState = state;
         gamePane.getChildren().clear();
         gameStates.get(currentState).init(gamePane);
+    }
+
+    public void setBackground(Image bg){
+        Game.backgroundPane.setImage(bg);
+        Game.backgroundPane.setFitWidth(Game.WIDTH*Game.SCALE);
+        Game.backgroundPane.setFitHeight(Game.HEIGHT*Game.SCALE);
+
     }
 
     public void draw(Pane gamePane){

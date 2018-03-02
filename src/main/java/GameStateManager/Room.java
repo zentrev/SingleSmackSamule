@@ -4,7 +4,6 @@ import Entity.Events.DoorWay;
 import Entity.Events.Event;
 import Entity.Events.EventFactory;
 import Entity.Items.Item;
-import Entity.Items.Item1;
 import Entity.Items.ItemFactory;
 import Entity.Monster.Monster;
 import Entity.Monster.MonsterFactory;
@@ -13,8 +12,8 @@ import Logic.Game;
 import TileMap.Tile;
 import TileMap.TileType;
 import javafx.embed.swing.SwingFXUtils;
-import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
@@ -26,7 +25,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ListIterator;
 
 import static GameStateManager.RoomState.sam;
 
@@ -38,6 +36,7 @@ public class Room {
 
     private String mapPath;
     private String tileSheetPath;
+    private String backgroundPath;
 
     private int numCols;
     private int numRows;
@@ -48,6 +47,8 @@ public class Room {
     private BufferedImage tileset;
     private int numTilesAcross;
     private int numTilesDown;
+
+    private Image background;
 
     private boolean active = false;
 
@@ -77,6 +78,9 @@ public class Room {
         try {
             InputStream in = getClass().getResourceAsStream(mapPath);
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            backgroundPath = br.readLine();
+            background = new Image(getClass().getResourceAsStream(backgroundPath));
+            gsm.setBackground(background);
             tileSheetPath = br.readLine();
             stampTileSheet();
             numCols = Integer.parseInt(br.readLine());
@@ -153,11 +157,10 @@ public class Room {
                 int itemx = Integer.parseInt(tokens[1]);
                 int itemy = Integer.parseInt(tokens[2]);
                 Item thisItem = IF.getItem(tileMap, itemNum, itemx, itemy);
-                items.add(thisItem);
                 if (!(collectedItems.contains(thisItem))) {
+                    items.add(thisItem);
                     gamePane.getChildren().add(thisItem);
                     thisItem.setRoom(this);
-                    System.out.println(items.size());
                 }
 
             }
@@ -241,18 +244,21 @@ public class Room {
             monster.update();
         }
 
-        for(Item item : items){
+        for (Item item : items) {
             item.update();
         }
 
         List<Item> toRemove = new ArrayList<>();
         for (Item item : items) {
-            if (item.getBoundsInParent().intersects(sam.getBoundsInParent())) {
-                toRemove.add(item);
-                item.itemTouched();
+            if (!item.isPicked()) {
+                if (item.getBoundsInParent().intersects(sam.getBoundsInParent())) {
+                    toRemove.add(item);
+                    item.itemTouched();
+                }
             }
         }
         items.removeAll(toRemove);
+        collectedItems.addAll(toRemove);
 
     }
 

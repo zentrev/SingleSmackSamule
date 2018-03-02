@@ -28,6 +28,8 @@ public class Item1 extends Item {
         this.setTranslateY(y);
 
         this.setImage(new Image("Assets/SpriteSheets/Google_Ultron.png"));
+
+        this.isPicked = false;
     }
 
     public void update() {
@@ -49,6 +51,7 @@ public class Item1 extends Item {
     public void itemTouched(){
         System.out.println("My son!");
         this.setVisible(false);
+        isPicked = true;
     }
 
 }

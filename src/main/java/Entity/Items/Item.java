@@ -12,6 +12,8 @@ abstract public class Item extends Entity {
     protected int xSet;
     protected int ySet;
 
+    protected boolean isPicked;
+
 
     public Item(Tile[][] tileMap) {
         super(tileMap);
@@ -34,5 +36,13 @@ abstract public class Item extends Entity {
             return this.xSet == temp.xSet && this.ySet == temp.ySet;
         }
         return false;
+    }
+
+    public boolean isPicked() {
+        return isPicked;
+    }
+
+    public void setPicked(boolean picked) {
+        isPicked = picked;
     }
 }
