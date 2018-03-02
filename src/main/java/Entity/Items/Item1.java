@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 
 public class Item1 extends Item {
 
-    public Item1(Tile[][] tm, double itemx, double itemy){
+    Item1(Tile[][] tm, double itemx, double itemy){
         super(tm);
         this.x = itemx + 16;
         this.y = itemy + 16;
@@ -37,9 +37,8 @@ public class Item1 extends Item {
 
     }
 
-    public void moveVelocity(){
+    private void moveVelocity(){
         yVelocity = fallSpeed;
-
         if(fallingOption){
             yVelocity = fallSpeed;
             y += yVelocity;
