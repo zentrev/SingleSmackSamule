@@ -200,7 +200,6 @@ public class Room {
 
     public void checkMonsterCollision(Rectangle attackBound){
         for(Monster monster : monsters){
-            System.out.println(monster.getBoundsInParent() + " : " + attackBound.getBoundsInParent());
             if(monster.getBoundsInParent().intersects(attackBound.getBoundsInParent())){
                 System.out.println("he ded");
                 gsm.getGamePane().getChildren().remove(monster);

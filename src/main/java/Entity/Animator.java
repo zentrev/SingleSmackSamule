@@ -45,6 +45,7 @@ public class Animator{
             playedOnce = true;
         }
 
+
     }
 
     public int getFrame() {return currentFrame;};

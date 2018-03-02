@@ -116,7 +116,6 @@ public class Samuel extends Entity {
             bound.setWidth(Room.tileSize);
         }
 
-        System.out.println(facingRight);
         roomState.getRooms().get(roomState.getCurrentRoom()).checkMonsterCollision(bound);
 
     }
@@ -249,5 +248,10 @@ public class Samuel extends Entity {
     public void draw() {
         this.animation.update();
         this.setImage(animation.getImage());
+        if(facingRight){
+            this.setScaleX(-1);
+        } else {
+            this.setScaleX(1);
+        }
     }
 }
