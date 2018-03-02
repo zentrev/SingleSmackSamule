@@ -14,7 +14,7 @@ public class RoomState extends GameState {
 
     public static Samuel sam;
 
-    private static final int NUMBEROFROOMS = 3;
+    private static final int NUMBEROFROOMS = 4;
 
     public RoomState(GameStateManager gsm) {
         super(gsm);
