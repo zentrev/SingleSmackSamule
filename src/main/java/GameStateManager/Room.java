@@ -191,7 +191,7 @@ public class Room {
     public void update(){
         for(DoorWay door : doorWays){
             if (door.getBoundsInParent().intersects(RoomState.sam.getBoundsInParent())){
-                door.comitEvent();
+                door.commitEvent();
             }
         }
         for(Monster monster : monsters){

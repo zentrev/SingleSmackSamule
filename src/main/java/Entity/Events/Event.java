@@ -7,5 +7,5 @@ public abstract class Event extends Entity {
     public Event(Tile[][] tileMap) {
         super(tileMap);
     }
-    public abstract void comitEvent();
+    public abstract void commitEvent();
 }

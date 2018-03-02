@@ -36,7 +36,7 @@ public class DoorWay extends Event {
     }
 
     @Override
-    public void comitEvent() {
+    public void commitEvent() {
         GameStateManager.ROOM.changeRoom(roomDest,(int)samXDest,(int)samYDest);
     }
 
