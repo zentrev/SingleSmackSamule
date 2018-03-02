@@ -32,6 +32,7 @@ abstract public class Entity extends ImageView {
     protected boolean up;
     protected boolean down;
     protected boolean jumping;
+    protected boolean atacking;
 
     protected boolean falling;
     protected boolean leftOption;

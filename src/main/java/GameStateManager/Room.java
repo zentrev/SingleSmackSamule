@@ -12,8 +12,10 @@ import Logic.Game;
 import TileMap.Tile;
 import TileMap.TileType;
 import javafx.embed.swing.SwingFXUtils;
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -26,6 +28,8 @@ import java.util.HashMap;
 public class Room {
 
     private Tile[][] tileMap;
+
+    private GameStateManager gsm;
 
     private String mapPath;
     private String tileSheetPath;
@@ -58,8 +62,9 @@ public class Room {
     // Tile Size
     public static final int tileSize = 80;
 
-    public Room(String mapPath) {
+    public Room(String mapPath, GameStateManager gsm) {
         this.mapPath = mapPath;
+        this.gsm = gsm;
     }
 
     public void init(Pane gamePane) {
@@ -79,7 +84,6 @@ public class Room {
             gamePane.setPrefHeight(height);
 
 
-
             String delims = "\\s+";
             for (int row = 0; row < numRows; row++) {
                 String line = br.readLine();
@@ -94,6 +98,9 @@ public class Room {
                         type = TileType.NORMAL;
                     } else if (chips[col] >= numTilesAcross && chips[col] <= numTilesAcross * 2) {
                         type = TileType.BLOCKED;
+                    } else {
+                        //option to add more tileTypes
+                        type = TileType.NORMAL;
                     }
                     tileMap[row][col] = new Tile(tileSheet.get(chips[col]), col * tileSize, row * tileSize, tileSize, type);
                     gamePane.getChildren().add(tileMap[row][col]);
@@ -102,7 +109,7 @@ public class Room {
 
             doorWays = new ArrayList<>();
             numDoors = Integer.parseInt(br.readLine());
-            for(int door = 0; door < numDoors; door++){
+            for (int door = 0; door < numDoors; door++) {
                 String doorLine = br.readLine();
                 String[] tokens = doorLine.split(delims);
                 int roomDest = Integer.parseInt(tokens[0]);
@@ -110,7 +117,7 @@ public class Room {
                 int doory = Integer.parseInt(tokens[2]);
                 int samx = Integer.parseInt(tokens[3]);
                 int samy = Integer.parseInt(tokens[4]);
-                DoorWay thisDoor = new DoorWay(tileMap,roomDest,doorx,doory,samx,samy);
+                DoorWay thisDoor = new DoorWay(tileMap, roomDest, doorx, doory, samx, samy);
                 doorWays.add(thisDoor);
             }
 
@@ -118,13 +125,13 @@ public class Room {
 
             monsters = new ArrayList<>();
             numOfMonsters = Integer.parseInt(br.readLine());
-            for(int monster = 0; monster < numOfMonsters; monster++){
+            for (int monster = 0; monster < numOfMonsters; monster++) {
                 String monsterLine = br.readLine();
                 String[] tokens = monsterLine.split(delims);
                 int monsterNum = Integer.parseInt(tokens[0]);
                 int monx = Integer.parseInt(tokens[1]);
                 int mony = Integer.parseInt(tokens[2]);
-                Monster thisMonster = MF.getMonster(tileMap, monsterNum,monx,mony);
+                Monster thisMonster = MF.getMonster(tileMap, monsterNum, monx, mony);
                 monsters.add(thisMonster);
                 gamePane.getChildren().add(thisMonster);
             }
@@ -133,15 +140,15 @@ public class Room {
 
             items = new ArrayList<>();
             numOfItems = Integer.parseInt(br.readLine());
-            for(int item = 0; item < numOfItems; item++){
+            for (int item = 0; item < numOfItems; item++) {
                 String itemLine = br.readLine();
                 String[] tokens = itemLine.split(delims);
                 int itemNum = Integer.parseInt(tokens[0]);
                 int itemx = Integer.parseInt(tokens[1]);
                 int itemy = Integer.parseInt(tokens[2]);
-                Item thisItem = IF.getItem(tileMap, itemNum,itemx,itemy);
-                for(Item checkItem : items) {
-                    if(!collectedItems.contains(checkItem)) {
+                Item thisItem = IF.getItem(tileMap, itemNum, itemx, itemy);
+                for (Item checkItem : items) {
+                    if (!collectedItems.contains(checkItem)) {
                         items.add(thisItem);
                         gamePane.getChildren().add(thisItem);
                     }
@@ -153,16 +160,16 @@ public class Room {
 
             events = new ArrayList<>();
             numOfEvents = Integer.parseInt(br.readLine());
-            for(int item = 0; item < numOfEvents; item++){
+            for (int item = 0; item < numOfEvents; item++) {
                 String eventLine = br.readLine();
                 String[] tokens = eventLine.split(delims);
                 int eventNum = Integer.parseInt(tokens[0]);
                 int eventx = Integer.parseInt(tokens[1]);
                 int eventy = Integer.parseInt(tokens[2]);
-                Event thisEvent = EF.getEvent(tileMap, eventNum,eventx,eventy);
+                Event thisEvent = EF.getEvent(tileMap, eventNum, eventx, eventy);
                 events.add(thisEvent);
-                for(Event event : events) {
-                    if(!activatedEvents.contains(event)) {
+                for (Event event : events) {
+                    if (!activatedEvents.contains(event)) {
                         event.setActivatedOnce(true);
                     }
                 }
@@ -172,7 +179,6 @@ public class Room {
             e.printStackTrace();
         }
     }
-
 
     private void stampTileSheet() {
         try {
@@ -187,9 +193,18 @@ public class Room {
                     tileSheet.put((row) + col * numTilesAcross, subimage);
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void checkMonsterCollision(Rectangle attackBound){
+        for(Monster monster : monsters){
+            System.out.println(monster.getBoundsInParent() + " : " + attackBound.getBoundsInParent());
+            if(monster.getBoundsInParent().intersects(attackBound.getBoundsInParent())){
+                System.out.println("he ded");
+                gsm.getGamePane().getChildren().remove(monster);
+            }
         }
     }
 
@@ -198,34 +213,34 @@ public class Room {
         double samX = sam.getTranslateX();
         double samY = sam.getTranslateY();
 
-        if(samX > Game.WIDTH/2-sam.getFitWidth()/2){
-            gamePane.setTranslateX((samX*-1)+Game.WIDTH/2-sam.getFitWidth()/2);
+        if (samX > Game.WIDTH / 2 - sam.getFitWidth() / 2) {
+            gamePane.setTranslateX((samX * -1) + Game.WIDTH / 2 - sam.getFitWidth() / 2);
         }
-        if(samX > gamePane.getWidth()-Game.WIDTH/2-(sam.getFitWidth()/2) && active) {
-            gamePane.setTranslateX((gamePane.getWidth()*-1)+Game.WIDTH);
+        if (samX > gamePane.getWidth() - Game.WIDTH / 2 - (sam.getFitWidth() / 2) && active) {
+            gamePane.setTranslateX((gamePane.getWidth() * -1) + Game.WIDTH);
         }
-        if(samY > Game.HEIGHT/2-sam.getFitHeight()/2){
-            gamePane.setTranslateY((samY*-1)+Game.HEIGHT/2-sam.getFitHeight()/2);
+        if (samY > Game.HEIGHT / 2 - sam.getFitHeight() / 2) {
+            gamePane.setTranslateY((samY * -1) + Game.HEIGHT / 2 - sam.getFitHeight() / 2);
         }
-        if(samY > gamePane.getHeight()-Game.HEIGHT/2-(sam.getFitHeight()/2) && active) {
-            gamePane.setTranslateY((gamePane.getHeight()*-1)+Game.HEIGHT);
+        if (samY > gamePane.getHeight() - Game.HEIGHT / 2 - (sam.getFitHeight() / 2) && active) {
+            gamePane.setTranslateY((gamePane.getHeight() * -1) + Game.HEIGHT);
         }
         active = true;
     }
 
-    public void update(){
-        for(DoorWay door : doorWays){
-            if (door.getBoundsInParent().intersects(RoomState.sam.getBoundsInParent())){
+    public void update() {
+        for (DoorWay door : doorWays) {
+            if (door.getBoundsInParent().intersects(RoomState.sam.getBoundsInParent())) {
                 door.commitEvent();
             }
         }
-        for(Monster monster : monsters){
+        for (Monster monster : monsters) {
             monster.update();
         }
-        for(Item item : items){
+        for (Item item : items) {
             item.update();
         }
-        for(Event event : events){
+        for (Event event : events) {
             event.update();
         }
     }
@@ -257,4 +272,6 @@ public class Room {
     public static int getTileSize() {
         return tileSize;
     }
+
+
 }

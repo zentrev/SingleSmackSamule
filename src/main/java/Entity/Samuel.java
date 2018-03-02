@@ -1,10 +1,14 @@
 package Entity;
 
+import GameStateManager.Room;
+import GameStateManager.RoomState;
 import TileMap.Tile;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.Event;
+import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.shape.Rectangle;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -15,14 +19,18 @@ import java.util.ArrayList;
 public class Samuel extends Entity {
 
     private int currentAction;
+    private RoomState roomState;
 
     private static final int IDLE = 0;
     private static final int WALKING = 1;
     private static final int JUMPING = 2;
     private static final int FALLING = 3;
 
-    public Samuel(Tile[][] tileMap) {
+    private long startTime;
+
+    public Samuel(Tile[][] tileMap,RoomState roomState) {
         super(tileMap);
+        this.roomState = roomState;
         height = 64;
         width = 64;
         x = 100;
@@ -39,6 +47,7 @@ public class Samuel extends Entity {
         setFitWidth(width);
         collionHeight = height;
         collionWidth = width;
+        atacking = false;
         numFrames = new int[]{
                 4
         };
@@ -77,7 +86,38 @@ public class Samuel extends Entity {
     public void update() {
         changeVelocity();
         checkCollision();
+        checkAttacking();
         moveVelocity();
+
+    }
+
+    private void checkAttacking() {
+        if(atacking){
+            long elapsed = (System.nanoTime() - startTime)/1000000;
+            long delay = 400;
+            if(elapsed>delay){
+                atacking = false;
+            }
+        }
+    }
+
+    private void heAttack(){
+        Rectangle bound = new Rectangle();
+        if(facingRight){
+            bound.setTranslateX(this.getTranslateX()+this.width/2);
+            bound.setTranslateY(this.getTranslateY());
+            bound.setHeight(this.height);
+            bound.setWidth(Room.tileSize);
+        }
+        if(!facingRight){
+            bound.setTranslateX(this.getTranslateX()-this.width/2-Room.tileSize);
+            bound.setTranslateY(this.getTranslateY());
+            bound.setHeight(this.height);
+            bound.setWidth(Room.tileSize);
+        }
+
+        System.out.println(facingRight);
+        roomState.getRooms().get(roomState.getCurrentRoom()).checkMonsterCollision(bound);
 
     }
 
@@ -91,23 +131,34 @@ public class Samuel extends Entity {
         } else {
             jumpingOption = true;
         }
-        if (jumpingOption) {
-            if (jumping) {
-                yVelocity = jumpStartVelecity;
-                setTranslateY(y + yVelocity);
+        if (!atacking) {
+            if (jumpingOption) {
+                if (jumping) {
+                    yVelocity = jumpStartVelecity;
+                    setTranslateY(y + yVelocity);
+                    jumpingOption = false;
+                }
+            }
+            xMovment();
+        } else {
+            if(jumpingOption){
                 jumpingOption = false;
             }
+            if (fallingOption) {
+                xMovment();
+            }
         }
+    }
 
-
+    private void xMovment() {
         if (right) {
             if (rightOption) {
-
+                facingRight = true;
                 setTranslateX(x + xVelocity);
             }
         } else if (left) {
             if (leftOption) {
-
+                facingRight = false;
                 setTranslateX(x + xVelocity);
             }
         } else {
@@ -117,7 +168,6 @@ public class Samuel extends Entity {
                 xVelocity += stopSpeed;
             }
         }
-
     }
 
     private void changeVelocity() {
@@ -172,6 +222,12 @@ public class Samuel extends Entity {
                 case W:
                     jumping = true;
                     break;
+                case K:
+                    atacking = true;
+                    startTime = System.nanoTime();
+                    heAttack();
+                    break;
+
             }
         }
         if (event.getEventType() == KeyEvent.KEY_RELEASED) {
