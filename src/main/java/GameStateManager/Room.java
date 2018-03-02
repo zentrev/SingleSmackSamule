@@ -63,12 +63,12 @@ public class Room {
     // Tile Size
     public static final int tileSize = 80;
 
-    public Room(String mapPath, GameStateManager gsm) {
+    Room(String mapPath, GameStateManager gsm) {
         this.mapPath = mapPath;
         this.gsm = gsm;
     }
 
-    public void init(Pane gamePane) {
+    void init(Pane gamePane) {
 
         try {
             InputStream in = getClass().getResourceAsStream(mapPath);
@@ -94,7 +94,7 @@ public class Room {
                     chips[i] = Integer.parseInt(tokens[i]);
                 }
                 for (int col = 0; col < numCols; col++) {
-                    TileType type = null;
+                    TileType type;
                     if (chips[col] < numTilesAcross) {
                         type = TileType.NORMAL;
                     } else if (chips[col] >= numTilesAcross && chips[col] <= numTilesAcross * 2) {
@@ -175,7 +175,6 @@ public class Room {
                     }
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -183,10 +182,10 @@ public class Room {
 
     private void stampTileSheet() {
         try {
-            tileSheet = new HashMap<Integer, Image>();
+            tileSheet = new HashMap<>();
             tileset = ImageIO.read(getClass().getResourceAsStream(tileSheetPath));
-            numTilesAcross = (int) tileset.getWidth() / tileSize;
-            numTilesDown = (int) tileset.getHeight() / tileSize;
+            numTilesAcross = tileset.getWidth() / tileSize;
+            numTilesDown =  tileset.getHeight() / tileSize;
             Image subimage;
             for (int col = 0; col < numTilesDown; col++) {
                 for (int row = 0; row < numTilesAcross; row++) {
@@ -211,7 +210,7 @@ public class Room {
         monsters.removeAll(toRemove);
     }
 
-    public void draw(Pane gamePane, Samuel sam) {
+    void draw(Pane gamePane, Samuel sam) {
 
         double samX = sam.getTranslateX();
         double samY = sam.getTranslateY();
