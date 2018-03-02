@@ -7,4 +7,8 @@ public abstract class Monster extends Entity{
     public Monster(Tile[][] tileMap) {
         super(tileMap);
     }
+
+    public void newMap(){
+        this.setVisible(false);
+    }
 }

@@ -4,9 +4,11 @@ import GameStateManager.GameStateManager;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
 
 public class Game extends Stage implements EventHandler{
 
@@ -22,6 +24,7 @@ public class Game extends Stage implements EventHandler{
 
     // panes
     private Pane gamePane;
+    public static ImageView backgroundPane;
     private Pane rootPane;
 
 
@@ -29,8 +32,12 @@ public class Game extends Stage implements EventHandler{
         this.setTitle("Single Smack Samuel");
         gamePane = new Pane();
         rootPane = new Pane();
+        backgroundPane = new ImageView();
+        backgroundPane.setFitHeight(HEIGHT*SCALE);
+        backgroundPane.setFitWidth(WIDTH*SCALE);
         rootPane.setPrefHeight(this.HEIGHT*SCALE);
         rootPane.setPrefWidth(this.WIDTH*SCALE);
+        rootPane.getChildren().add(backgroundPane);
         rootPane.getChildren().add(gamePane);
         Scene scene = new Scene(rootPane);
         scene.setOnKeyPressed(this);
