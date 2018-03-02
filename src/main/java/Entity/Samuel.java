@@ -21,9 +21,11 @@ public class Samuel extends Entity {
     private int currentAction;
     private RoomState roomState;
 
+    public static int HEALTH = 3;
+
     private static final int IDLE = 0;
     private static final int WALKING = 1;
-    private static final int JUMPING = 2;
+    private static final int ATACKING = 2;
     private static final int FALLING = 3;
 
     private long startTime;

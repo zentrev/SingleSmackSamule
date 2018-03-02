@@ -4,6 +4,7 @@ import Entity.Events.DoorWay;
 import Entity.Events.Event;
 import Entity.Events.EventFactory;
 import Entity.Items.Item;
+import Entity.Items.Item1;
 import Entity.Items.ItemFactory;
 import Entity.Monster.Monster;
 import Entity.Monster.MonsterFactory;
@@ -25,6 +26,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ListIterator;
+
+import static GameStateManager.RoomState.sam;
 
 public class Room {
 
@@ -55,10 +59,10 @@ public class Room {
     private int numOfMonsters;
     private ArrayList<Item> items;
     private int numOfItems;
-    private ArrayList<Item> collectedItems;
+    private ArrayList<Item> collectedItems = new ArrayList<>();
     private ArrayList<Event> events;
     private int numOfEvents;
-    private ArrayList<Event> activatedEvents;
+    private ArrayList<Event> activatedEvents = new ArrayList<>();
 
     // Tile Size
     public static final int tileSize = 80;
@@ -80,6 +84,7 @@ public class Room {
             tileMap = new Tile[numRows][numCols];
             width = numCols * tileSize;
             height = numRows * tileSize;
+
 
             gamePane.setPrefWidth(width);
             gamePane.setPrefHeight(height);
@@ -148,12 +153,13 @@ public class Room {
                 int itemx = Integer.parseInt(tokens[1]);
                 int itemy = Integer.parseInt(tokens[2]);
                 Item thisItem = IF.getItem(tileMap, itemNum, itemx, itemy);
-                for (Item checkItem : items) {
-                    if (!collectedItems.contains(checkItem)) {
-                        items.add(thisItem);
-                        gamePane.getChildren().add(thisItem);
-                    }
+                items.add(thisItem);
+                if (!(collectedItems.contains(thisItem))) {
+                    gamePane.getChildren().add(thisItem);
+                    thisItem.setRoom(this);
+                    System.out.println(items.size());
                 }
+
             }
 
             EventFactory EF = new EventFactory();
@@ -169,11 +175,7 @@ public class Room {
                 int eventy = Integer.parseInt(tokens[2]);
                 Event thisEvent = EF.getEvent(tileMap, eventNum, eventx, eventy);
                 events.add(thisEvent);
-                for (Event event : events) {
-                    if (!activatedEvents.contains(event)) {
-                        event.setActivatedOnce(true);
-                    }
-                }
+                events.removeAll(activatedEvents);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -185,7 +187,7 @@ public class Room {
             tileSheet = new HashMap<>();
             tileset = ImageIO.read(getClass().getResourceAsStream(tileSheetPath));
             numTilesAcross = tileset.getWidth() / tileSize;
-            numTilesDown =  tileset.getHeight() / tileSize;
+            numTilesDown = tileset.getHeight() / tileSize;
             Image subimage;
             for (int col = 0; col < numTilesDown; col++) {
                 for (int row = 0; row < numTilesAcross; row++) {
@@ -198,11 +200,10 @@ public class Room {
         }
     }
 
-    public void checkMonsterCollision(Rectangle attackBound){
+    public void checkMonsterCollision(Rectangle attackBound) {
         List<Monster> toRemove = new ArrayList<>();
-        for(Monster monster : monsters){
-            if(monster.getBoundsInParent().intersects(attackBound.getBoundsInParent())){
-                System.out.println("he ded");
+        for (Monster monster : monsters) {
+            if (monster.getBoundsInParent().intersects(attackBound.getBoundsInParent())) {
                 toRemove.add(monster);
                 gsm.getGamePane().getChildren().remove(monster);
             }
@@ -232,20 +233,29 @@ public class Room {
 
     public void update() {
         for (DoorWay door : doorWays) {
-            if (door.getBoundsInParent().intersects(RoomState.sam.getBoundsInParent())) {
+            if (door.getBoundsInParent().intersects(sam.getBoundsInParent())) {
                 door.commitEvent();
             }
         }
         for (Monster monster : monsters) {
             monster.update();
         }
-        for (Item item : items) {
+
+        for(Item item : items){
             item.update();
         }
-        for (Event event : events) {
-            event.update();
+
+        List<Item> toRemove = new ArrayList<>();
+        for (Item item : items) {
+            if (item.getBoundsInParent().intersects(sam.getBoundsInParent())) {
+                toRemove.add(item);
+                item.itemTouched();
+            }
         }
+        items.removeAll(toRemove);
+
     }
+
 
     public Tile[][] getTileMap() {
         return tileMap;
