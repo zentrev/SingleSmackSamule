@@ -138,13 +138,13 @@ public class Samuel extends Entity {
             bound.setTranslateX(this.getTranslateX()+this.width/2);
             bound.setTranslateY(this.getTranslateY());
             bound.setHeight(this.height);
-            bound.setWidth(Room.tileSize);
+            bound.setWidth(Room.tileSize/1.2);
         }
         if(!facingRight){
-            bound.setTranslateX(this.getTranslateX()-this.width/2-Room.tileSize);
+            bound.setTranslateX(this.getTranslateX()+this.width/2-(Room.tileSize/1.2));
             bound.setTranslateY(this.getTranslateY());
             bound.setHeight(this.height);
-            bound.setWidth(Room.tileSize);
+            bound.setWidth(Room.tileSize/1.2);
         }
 
         roomState.getRooms().get(roomState.getCurrentRoom()).checkMonsterCollision(bound);
