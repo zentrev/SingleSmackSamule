@@ -7,7 +7,6 @@ import Logic.Game;
 import TileMap.Tile;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.Event;
-import javafx.geometry.Bounds;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -29,10 +28,11 @@ public class Samuel extends Entity {
     public int HEALTH = 3;
     public ArrayList<Item> samsItems;
 
-    private static final int IDLE = 0;
-    private static final int WALKING = 1;
-    private static final int ATACKING = 2;
-    private static final int FALLING = 3;
+    private static final int WALKING = 0;
+    private static final int ATACKING = 1;
+    private static final int FALLING = 2;
+    private static final int IDLE = 3;
+    private static final int DEAD = 4;
 
     private long startTime;
 
@@ -62,15 +62,19 @@ public class Samuel extends Entity {
         collionWidth = width;
         atacking = false;
         numFrames = new int[]{
-                4
+                4,3,1,1,1
         };
         try {
-            BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Assets/SpriteSheets/testSam.png"));
+            BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Assets/SpriteSheets/sam.png"));
             sprites = new ArrayList<Image[]>();
             for (int i = 0; i < numFrames.length; i++) {
                 Image[] sprit = new Image[numFrames[i]];
                 for (int j = 0; j < numFrames[i]; j++) {
-                    sprit[j] = SwingFXUtils.toFXImage(spritesheet.getSubimage(j * 64, i * 64, 64, 64), null);
+                    if(j != 4) {
+                        sprit[j] = SwingFXUtils.toFXImage(spritesheet.getSubimage(j * 64, i * 64, 64, 64), null);
+                    } else {
+                        sprit[j] = SwingFXUtils.toFXImage(spritesheet.getSubimage(j * 64, i * 64, 80, 64), null);
+                    }
                 }
                 sprites.add(sprit);
 
@@ -117,6 +121,11 @@ public class Samuel extends Entity {
         if(atacking){
             long elapsed = (System.nanoTime() - startTime)/1000000;
             long delay = 400;
+            if(animation.hasPlayedOnce() && currentAction == ATACKING) {
+                currentAction = IDLE;
+                animation.setFrames(sprites.get(IDLE));
+                animation.setDelay(150);
+            }
             if(elapsed>delay){
                 atacking = false;
             }
@@ -149,8 +158,16 @@ public class Samuel extends Entity {
     private void moveVelocity() {
         if (fallingOption) {
             setTranslateY(y + yVelocity);
+            if(currentAction != ATACKING) {
+                currentAction = FALLING;
+                this.animation.setFrames(sprites.get(FALLING));
+            }
         } else {
             jumpingOption = true;
+            if(currentAction != WALKING && currentAction != ATACKING) {
+                currentAction = IDLE;
+                animation.setFrames(sprites.get(currentAction));
+            }
         }
         if (!atacking && !flinching) {
             if (jumpingOption) {
@@ -160,32 +177,53 @@ public class Samuel extends Entity {
                     jumpingOption = false;
                 }
             }
-            xMovment();
+            xMovement();
         } else {
             if(jumpingOption){
                 jumpingOption = false;
             }
             if (fallingOption) {
-                xMovment();
+                xMovement();
             }
         }
     }
 
-    private void xMovment() {
+    private void xMovement() {
         if (right) {
             if (rightOption) {
                 facingRight = true;
                 setTranslateX(x + xVelocity);
+                if(currentAction != WALKING && currentAction != FALLING && currentAction != ATACKING) {
+                    this.currentAction = WALKING;
+                    animation.setFrames(sprites.get(WALKING));
+                }
             }
         } else if (left) {
             if (leftOption) {
                 facingRight = false;
                 setTranslateX(x + xVelocity);
+                if(currentAction != WALKING && currentAction != FALLING && currentAction != ATACKING) {
+                    this.currentAction = WALKING;
+                    animation.setFrames(sprites.get(WALKING));
+                }
+
             }
         } else {
             if (xVelocity > 0) {
+                if(currentAction != IDLE) {
+                    if(currentAction != ATACKING) {
+                        this.currentAction = IDLE;
+                        animation.setFrames(sprites.get(IDLE));
+                    }
+                }
                 xVelocity -= stopSpeed;
             } else if (xVelocity < 0) {
+                if(currentAction != IDLE) {
+                    if(currentAction != ATACKING) {
+                        this.currentAction = IDLE;
+                        animation.setFrames(sprites.get(IDLE));
+                    }
+                }
                 xVelocity += stopSpeed;
             }
         }
@@ -199,7 +237,7 @@ public class Samuel extends Entity {
             }
         } else {
             if (yVelocity >= 0) {
-                yVelocity = 0;
+                yVelocity = .5;
             }
         }
 
@@ -246,6 +284,9 @@ public class Samuel extends Entity {
                 case K:
                     atacking = true;
                     startTime = System.nanoTime();
+                    currentAction = ATACKING;
+                    animation.setFrames(sprites.get(ATACKING));
+                    animation.setDelay(100);
                     heAttack();
                     break;
 
