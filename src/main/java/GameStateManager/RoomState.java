@@ -23,13 +23,12 @@ public class RoomState extends GameState {
             rooms.get(i).init(gsm.getGamePane());
         }
         currentRoom = 0;
-
     }
+
 
     public void changeRoom(int roomNumber, int samX, int samY) {
         gsm.getGamePane().getChildren().clear();
         currentRoom = roomNumber;
-        rooms.get(currentRoom).init(gsm.getGamePane());
         sam.loadSam(rooms.get(currentRoom).getTileMap(), samX, samY);
         rooms.get(currentRoom).init(gsm.getGamePane());
         gsm.getGamePane().getChildren().add(sam);
