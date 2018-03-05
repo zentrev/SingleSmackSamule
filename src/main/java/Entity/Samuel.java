@@ -46,8 +46,8 @@ public class Samuel extends Entity {
         samsItems = new ArrayList<>();
         height = 64;
         width = 64;
-        x = 100;
-        y = 700;
+        x = 400;
+        y = 400;
         moveSpeed = 6;
         stopSpeed = 1;
         maxSpeed = 6;
