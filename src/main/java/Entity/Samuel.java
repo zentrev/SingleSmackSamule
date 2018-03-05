@@ -8,8 +8,10 @@ import TileMap.Tile;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.Event;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 import javax.imageio.ImageIO;
@@ -24,6 +26,11 @@ public class Samuel extends Entity {
     private RoomState roomState;
 
     private Pane UIPane;
+
+    private ImageView H1;
+    private ImageView H2;
+    private ImageView H3;
+
 
     public int HEALTH = 3;
     public ArrayList<Item> samsItems;
@@ -42,6 +49,18 @@ public class Samuel extends Entity {
     public Samuel(Tile[][] tileMap,RoomState roomState) {
         super(tileMap);
         this.roomState = roomState;
+        H1 = new ImageView();
+        H2 = new ImageView();
+        H3 = new ImageView();
+        H3.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
+        H2.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
+        H1.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
+        H1.setTranslateX(Game.WIDTH/2-56);
+        H1.setTranslateY(15);
+        H2.setTranslateX(Game.WIDTH/2-16);
+        H2.setTranslateY(15);
+        H3.setTranslateX(Game.WIDTH/2+24);
+        H3.setTranslateY(15);
         UIPane = Game.UIPane;
         samsItems = new ArrayList<>();
         height = 64;
@@ -114,7 +133,7 @@ public class Samuel extends Entity {
     private void updateUI(){
         UIPane.getChildren().clear();
         //add things to ui
-        UIPane.getChildren().addAll();
+        UIPane.getChildren().addAll(H1,H2,H3);
     }
 
     private void checkAttacking() {
@@ -332,6 +351,30 @@ public class Samuel extends Entity {
             flinching = false;
         } if(elapse>invinceTime){
             invince = false;
+        }
+    }
+
+    public void damage(int damage){
+        HEALTH -= damage;
+        if(HEALTH == 3){
+            H1.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
+            H2.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
+            H3.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
+        }
+        if(HEALTH == 2){
+            H1.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/death.png")));
+            H2.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
+            H3.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
+        }
+        if(HEALTH == 1){
+            H1.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/death.png")));
+            H2.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/death.png")));
+            H3.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
+        }
+        if(HEALTH == 0){
+            H1.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/death.png")));
+            H2.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/death.png")));
+            H3.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/death.png")));
         }
     }
 }

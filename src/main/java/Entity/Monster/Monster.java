@@ -8,7 +8,4 @@ public abstract class Monster extends Entity{
         super(tileMap);
     }
 
-    public void newMap(){
-        this.setVisible(false);
-    }
 }

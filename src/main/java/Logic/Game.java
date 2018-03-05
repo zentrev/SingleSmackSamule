@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 
@@ -37,11 +39,13 @@ public class Game extends Stage implements EventHandler{
         backgroundPane = new ImageView();
         backgroundPane.setFitHeight(HEIGHT*SCALE);
         backgroundPane.setFitWidth(WIDTH*SCALE);
+        UIPane.setPrefHeight(HEIGHT*SCALE);
+        UIPane.setPrefWidth(WIDTH*SCALE);
         rootPane.setPrefHeight(this.HEIGHT*SCALE);
         rootPane.setPrefWidth(this.WIDTH*SCALE);
         rootPane.getChildren().add(backgroundPane);
         rootPane.getChildren().add(gamePane);
-        rootPane.getChildren().addAll(UIPane);
+        rootPane.getChildren().add(UIPane);
         Scene scene = new Scene(rootPane);
         scene.setOnKeyPressed(this);
         this.setScene(scene);

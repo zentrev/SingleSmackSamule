@@ -123,5 +123,4 @@ abstract public class Entity extends ImageView {
 
     }
 
-
 }
