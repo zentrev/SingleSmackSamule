@@ -37,6 +37,11 @@ public class GameStateManager {
 
     }
 
+    public void newRoomState(){
+        ROOM = new RoomState(this);
+        setState(ROOMSTATE);
+    }
+
     public void setState(STATE state){
         currentState = state;
         gamePane.getChildren().clear();

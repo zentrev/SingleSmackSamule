@@ -10,6 +10,8 @@ public class ItemFactory {
         switch(itemId){
             case 1:
                 return new Item1(tileMap, x* Room.tileSize, y*Room.tileSize);
+            case 2:
+                return new JasonNeededItem(tileMap, x*Room.tileSize, y*Room.tileSize);
             default:
                 return null;
         }

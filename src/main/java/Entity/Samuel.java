@@ -42,11 +42,14 @@ public class Samuel extends Entity {
     private static final int DEAD = 4;
 
     private long startTime;
+    private long flinchTime;
+    int delay = 0;
+
 
     private boolean flinching;
     public boolean invince;
 
-    public Samuel(Tile[][] tileMap,RoomState roomState) {
+    public Samuel(Tile[][] tileMap, RoomState roomState) {
         super(tileMap);
         this.roomState = roomState;
         H1 = new ImageView();
@@ -55,11 +58,11 @@ public class Samuel extends Entity {
         H3.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
         H2.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
         H1.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
-        H1.setTranslateX(Game.WIDTH/2-56);
+        H1.setTranslateX(Game.WIDTH / 2 - 56);
         H1.setTranslateY(15);
-        H2.setTranslateX(Game.WIDTH/2-16);
+        H2.setTranslateX(Game.WIDTH / 2 - 16);
         H2.setTranslateY(15);
-        H3.setTranslateX(Game.WIDTH/2+24);
+        H3.setTranslateX(Game.WIDTH / 2 + 24);
         H3.setTranslateY(15);
         UIPane = Game.UIPane;
         samsItems = new ArrayList<>();
@@ -81,7 +84,7 @@ public class Samuel extends Entity {
         collionWidth = width;
         atacking = false;
         numFrames = new int[]{
-                4,3,1,1,1
+                4, 3, 1, 1, 1
         };
         try {
             BufferedImage spritesheet = ImageIO.read(getClass().getResourceAsStream("/Assets/SpriteSheets/sam.png"));
@@ -89,10 +92,10 @@ public class Samuel extends Entity {
             for (int i = 0; i < numFrames.length; i++) {
                 Image[] sprit = new Image[numFrames[i]];
                 for (int j = 0; j < numFrames[i]; j++) {
-                    if(j != 4) {
+                    if (j != 4) {
                         sprit[j] = SwingFXUtils.toFXImage(spritesheet.getSubimage(j * 64, i * 64, 64, 64), null);
                     } else {
-                        sprit[j] = SwingFXUtils.toFXImage(spritesheet.getSubimage(j * 64, i * 64, 80, 64), null);
+                        sprit[j] = SwingFXUtils.toFXImage(spritesheet.getSubimage(j * 80, i * 64, 80, 64), null);
                     }
                 }
                 sprites.add(sprit);
@@ -120,54 +123,65 @@ public class Samuel extends Entity {
     }
 
     public void update() {
-        if(HEALTH > 0) {
+        if (HEALTH > 0) {
             changeVelocity();
             checkCollision();
             checkAttacking();
             checkFlinching();
             moveVelocity();
             updateUI();
+        } else {
+            changeVelocity();
+            checkCollision();
+            moveVelocity();
+            animation.setFrames(sprites.get(DEAD));
+            animation.update();
         }
     }
 
-    private void updateUI(){
+    private void updateUI() {
         UIPane.getChildren().clear();
-        //add things to ui
-        UIPane.getChildren().addAll(H1,H2,H3);
+        UIPane.getChildren().addAll(H1, H2, H3);
+        for (int i = 0; i > samsItems.size(); i++) {
+            samsItems.get(i).setTranslateX(10);
+            samsItems.get(i).setTranslateY(35 * i);
+            UIPane.getChildren().add(samsItems.get(i));
+        }
     }
 
     private void checkAttacking() {
-        if(atacking){
-            long elapsed = (System.nanoTime() - startTime)/1000000;
+        if (atacking) {
+            long elapsed = (System.nanoTime() - startTime) / 1000000;
             long delay = 400;
-            if(animation.hasPlayedOnce() && currentAction == ATACKING) {
+            if (animation.hasPlayedOnce() && currentAction == ATACKING) {
                 currentAction = IDLE;
                 animation.setFrames(sprites.get(IDLE));
                 animation.setDelay(150);
             }
-            if(elapsed>delay){
+            if (elapsed > delay) {
                 atacking = false;
             }
         }
     }
 
-    private void heAttack(){
-        Rectangle bound = new Rectangle();
-        if(facingRight){
-            bound.setTranslateX(this.getTranslateX()+this.width/2);
-            bound.setTranslateY(this.getTranslateY());
-            bound.setHeight(this.height);
-            bound.setWidth(Room.tileSize/1.1);
-        }
-        if(!facingRight){
-            bound.setTranslateX(this.getTranslateX()+this.width/2-(Room.tileSize/1.1));
-            bound.setTranslateY(this.getTranslateY());
-            bound.setHeight(this.height);
-            bound.setWidth(Room.tileSize/1.1);
-        }
+    private void heAttack() {
+        if(HEALTH != 0) {
+            Rectangle bound = new Rectangle();
+            if (facingRight) {
+                bound.setTranslateX(this.getTranslateX() + this.width / 2);
+                bound.setTranslateY(this.getTranslateY());
+                bound.setHeight(this.height);
+                bound.setWidth(Room.tileSize / 1.1);
+            }
+            if (!facingRight) {
+                bound.setTranslateX(this.getTranslateX() + this.width / 2 - (Room.tileSize / 1.1));
+                bound.setTranslateY(this.getTranslateY());
+                bound.setHeight(this.height);
+                bound.setWidth(Room.tileSize / 1.1);
+            }
 
-        roomState.getRooms().get(roomState.getCurrentRoom()).checkMonsterCollision(bound);
-
+            roomState.getRooms().get(roomState.getCurrentRoom()).checkMonsterCollision(bound);
+        }
     }
 
     public void checkCollision() {
@@ -177,13 +191,13 @@ public class Samuel extends Entity {
     private void moveVelocity() {
         if (fallingOption) {
             setTranslateY(y + yVelocity);
-            if(currentAction != ATACKING) {
+            if (currentAction != ATACKING) {
                 currentAction = FALLING;
                 this.animation.setFrames(sprites.get(FALLING));
             }
         } else {
             jumpingOption = true;
-            if(currentAction != WALKING && currentAction != ATACKING) {
+            if (currentAction != WALKING && currentAction != ATACKING) {
                 currentAction = IDLE;
                 animation.setFrames(sprites.get(currentAction));
             }
@@ -198,7 +212,7 @@ public class Samuel extends Entity {
             }
             xMovement();
         } else {
-            if(jumpingOption){
+            if (jumpingOption) {
                 jumpingOption = false;
             }
             if (fallingOption) {
@@ -212,7 +226,7 @@ public class Samuel extends Entity {
             if (rightOption) {
                 facingRight = true;
                 setTranslateX(x + xVelocity);
-                if(currentAction != WALKING && currentAction != FALLING && currentAction != ATACKING) {
+                if (currentAction != WALKING && currentAction != FALLING && currentAction != ATACKING) {
                     this.currentAction = WALKING;
                     animation.setFrames(sprites.get(WALKING));
                 }
@@ -221,7 +235,7 @@ public class Samuel extends Entity {
             if (leftOption) {
                 facingRight = false;
                 setTranslateX(x + xVelocity);
-                if(currentAction != WALKING && currentAction != FALLING && currentAction != ATACKING) {
+                if (currentAction != WALKING && currentAction != FALLING && currentAction != ATACKING) {
                     this.currentAction = WALKING;
                     animation.setFrames(sprites.get(WALKING));
                 }
@@ -229,16 +243,16 @@ public class Samuel extends Entity {
             }
         } else {
             if (xVelocity > 0) {
-                if(currentAction != IDLE) {
-                    if(currentAction != ATACKING) {
+                if (currentAction != IDLE) {
+                    if (currentAction != ATACKING) {
                         this.currentAction = IDLE;
                         animation.setFrames(sprites.get(IDLE));
                     }
                 }
                 xVelocity -= stopSpeed;
             } else if (xVelocity < 0) {
-                if(currentAction != IDLE) {
-                    if(currentAction != ATACKING) {
+                if (currentAction != IDLE) {
+                    if (currentAction != ATACKING) {
                         this.currentAction = IDLE;
                         animation.setFrames(sprites.get(IDLE));
                     }
@@ -330,48 +344,68 @@ public class Samuel extends Entity {
     public void draw() {
         this.animation.update();
         this.setImage(animation.getImage());
-        if(facingRight){
+        if (facingRight) {
             this.setScaleX(-1);
         } else {
             this.setScaleX(1);
         }
     }
 
-    public void flinch(Long startTime){
-        this.startTime = startTime;
+    public void flinch(Long startTime) {
+        this.flinchTime = startTime;
         flinching = true;
         invince = true;
+        delay = 100;
     }
 
-    public void checkFlinching(){
-        int flinchTime = 400;
+    public void checkFlinching() {
+        boolean visalbe = true;
+        int flinchDelay = 400;
         int invinceTime = 1000;
-        long elapse = (System.nanoTime()-startTime)/1000000;
-        if(elapse>flinchTime){
+        long elapse = (System.nanoTime() - flinchTime) / 1000000;
+        if (elapse > flinchDelay) {
             flinching = false;
-        } if(elapse>invinceTime){
+        }
+        if(delay < elapse){
+            visalbe = true;
+            if(delay*2<elapse){
+                delay = (int)elapse+(delay*2);
+            }
+        } else {
+            visalbe = false;
+        }
+
+        if (elapse > invinceTime) {
             invince = false;
+            visalbe = true;
+            delay = 0;
+        }
+
+        if (visalbe) {
+            this.setVisible(true);
+        } else {
+            this.setVisible(false);
         }
     }
 
-    public void damage(int damage){
+    public void damage(int damage) {
         HEALTH -= damage;
-        if(HEALTH == 3){
+        if (HEALTH == 3) {
             H1.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
             H2.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
             H3.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
         }
-        if(HEALTH == 2){
+        if (HEALTH == 2) {
             H1.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/death.png")));
             H2.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
             H3.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
         }
-        if(HEALTH == 1){
+        if (HEALTH == 1) {
             H1.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/death.png")));
             H2.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/death.png")));
             H3.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/health.png")));
         }
-        if(HEALTH == 0){
+        if (HEALTH == 0) {
             H1.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/death.png")));
             H2.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/death.png")));
             H3.setImage(new Image(getClass().getResourceAsStream("/Assets/Items/death.png")));
