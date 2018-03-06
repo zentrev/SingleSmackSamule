@@ -146,13 +146,16 @@ public class Samuel extends Entity {
         }
     }
 
+    public void addItems(Item item){
+        samsItems.add(item);
+    }
 
     private void updateUI() {
         UIPane.getChildren().clear();
         UIPane.getChildren().addAll(H1, H2, H3);
-        for (int i = 0; i > samsItems.size(); i++) {
-            samsItems.get(i).setTranslateX(10);
-            samsItems.get(i).setTranslateY(35 * i);
+        for (int i = 0; i < samsItems.size(); i++) {
+            samsItems.get(i).setTranslateX(20);
+            samsItems.get(i).setTranslateY(35 * (i+1));
             UIPane.getChildren().add(samsItems.get(i));
         }
     }

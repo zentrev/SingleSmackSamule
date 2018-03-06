@@ -7,9 +7,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.HashMap;
 
-import static GameStateManager.GameStateManager.STATE.DEATH;
-import static GameStateManager.GameStateManager.STATE.MENUSTATE;
-import static GameStateManager.GameStateManager.STATE.ROOMSTATE;
+import static GameStateManager.GameStateManager.STATE.*;
 
 public class GameStateManager {
 
@@ -24,12 +22,14 @@ public class GameStateManager {
         MENUSTATE,
         SETTIGS,
         ROOMSTATE,
-        DEATH
+        DEATH,
+        WIN
     }
 
     public static MenuState MENU;
     public static RoomState ROOM;
     public static Death DEAD;
+    public static winState WINSTATE;
 
     public GameStateManager(Pane gamePane, Game game){
 
@@ -40,6 +40,7 @@ public class GameStateManager {
         gameStates.put(MENUSTATE, MENU = new MenuState(this));
         gameStates.put(ROOMSTATE, ROOM = new RoomState(this));
         gameStates.put(DEATH, DEAD = new Death(this));
+        gameStates.put(WIN, WINSTATE = new winState(this));
         setState(MENUSTATE);
 
     }
@@ -54,6 +55,7 @@ public class GameStateManager {
         currentState = state;
         gamePane.getChildren().clear();
         gameStates.get(currentState).init(gamePane);
+        Game.UIPane.getChildren().clear();
     }
 
     public void setBackground(Image bg){
