@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 
 import java.util.HashMap;
 
+import static GameStateManager.GameStateManager.STATE.DEATH;
 import static GameStateManager.GameStateManager.STATE.MENUSTATE;
 import static GameStateManager.GameStateManager.STATE.ROOMSTATE;
 
@@ -19,14 +20,16 @@ public class GameStateManager {
 
     private Game game;
 
-    public static enum STATE {
+    public enum STATE {
         MENUSTATE,
         SETTIGS,
-        ROOMSTATE
+        ROOMSTATE,
+        DEATH
     }
 
     public static MenuState MENU;
     public static RoomState ROOM;
+    public static Death DEAD;
 
     public GameStateManager(Pane gamePane, Game game){
 
@@ -36,12 +39,14 @@ public class GameStateManager {
         gameStates = new HashMap<STATE, GameState>();
         gameStates.put(MENUSTATE, MENU = new MenuState(this));
         gameStates.put(ROOMSTATE, ROOM = new RoomState(this));
+        gameStates.put(DEATH, DEAD = new Death(this));
         setState(MENUSTATE);
 
     }
 
     public void newRoomState(){
         ROOM = new RoomState(this);
+        gameStates.put(ROOMSTATE, ROOM );
         setState(ROOMSTATE);
     }
 

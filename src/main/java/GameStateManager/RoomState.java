@@ -14,7 +14,7 @@ public class RoomState extends GameState {
 
     public static Samuel sam;
 
-    private static final int NUMBEROFROOMS = 7;
+    private static final int NUMBEROFROOMS = 8;
 
     public RoomState(GameStateManager gsm) {
         super(gsm);
@@ -46,9 +46,11 @@ public class RoomState extends GameState {
         } else if(samY > Game.HEIGHT/2 && samY < rooms.get(currentRoom).getHeight()-Game.HEIGHT/2){
             gsm.getGamePane().setTranslateY(samY);
         }
+    }
 
-
-
+    public void samDies(){
+        gsm.setState(GameStateManager.STATE.DEATH);
+        System.out.println("cool");
     }
 
     @Override
@@ -63,6 +65,7 @@ public class RoomState extends GameState {
     public void update() {
         sam.update();
         rooms.get(currentRoom).update();
+
     }
 
     @Override

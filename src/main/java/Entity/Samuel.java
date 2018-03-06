@@ -45,6 +45,8 @@ public class Samuel extends Entity {
     private long flinchTime;
     int delay = 0;
 
+    long deathStart = 0;
+    long deathElapse = 0;
 
     private boolean flinching;
     public boolean invince;
@@ -130,14 +132,20 @@ public class Samuel extends Entity {
             checkFlinching();
             moveVelocity();
             updateUI();
+            deathStart = System.nanoTime();
         } else {
             changeVelocity();
             checkCollision();
             moveVelocity();
             animation.setFrames(sprites.get(DEAD));
             animation.update();
+            deathElapse = (System.nanoTime()-deathStart)/1000000;
+            if(2000 < deathElapse) {
+                roomState.samDies();
+            }
         }
     }
+
 
     private void updateUI() {
         UIPane.getChildren().clear();

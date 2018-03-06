@@ -1,7 +1,5 @@
 package GameStateManager;
 
-import Logic.Game;
-import Logic.Main;
 import javafx.event.Event;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
@@ -94,10 +92,10 @@ public class MenuState extends GameState{
                     }
                     break;
                 case ENTER:
+                case SPACE:
                     commitOption();
                     break;
             }
-            //gsm.setState(GameStateManager.STATE.ROOMSTATE);
         }
     }
 }
