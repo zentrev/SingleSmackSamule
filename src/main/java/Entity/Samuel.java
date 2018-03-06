@@ -181,6 +181,8 @@ public class Samuel extends Entity {
             }
 
             roomState.getRooms().get(roomState.getCurrentRoom()).checkMonsterCollision(bound);
+            roomState.getRooms().get(roomState.getCurrentRoom()).checkEventCollision(bound);
+
         }
     }
 

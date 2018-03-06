@@ -9,6 +9,7 @@ public abstract class Event extends Entity {
     }
     protected boolean activatedOnce;
     public abstract void commitEvent();
+    public abstract void commitAttackEvent();
     public boolean getActivatedOnce(){
         return activatedOnce;
     }

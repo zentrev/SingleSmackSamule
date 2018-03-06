@@ -93,7 +93,6 @@ public class mon1 extends Monster {
         if (sam.getBoundsInParent().intersects(this.getBoundsInParent()) && !sam.invince) {
             sam.damage(1);
             sam.flinch(System.nanoTime());
-            System.out.println(sam.HEALTH);
 
             return true;
         }

@@ -20,6 +20,7 @@ import javafx.scene.shape.Rectangle;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.EOFException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -214,6 +215,14 @@ public class Room {
         monsters.removeAll(toRemove);
     }
 
+    public void checkEventCollision(Rectangle attackBound) {
+        for (Event event : events) {
+            if (event.getBoundsInParent().intersects(attackBound.getBoundsInParent())) {
+                event.commitAttackEvent();
+            }
+        }
+    }
+
     void draw(Pane gamePane, Samuel sam) {
 
         double samX = sam.getTranslateX();
@@ -259,6 +268,10 @@ public class Room {
         }
         items.removeAll(toRemove);
         collectedItems.addAll(toRemove);
+
+        for (Event event : events) {
+            event.update();
+        }
 
     }
 

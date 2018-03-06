@@ -27,5 +27,10 @@ public class Event1 extends Event {
         System.out.println("Event contacted");
     }
 
+    @Override
+    public void commitAttackEvent() {
+
+    }
+
 
 }
