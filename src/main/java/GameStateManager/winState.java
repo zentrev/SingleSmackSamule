@@ -6,6 +6,10 @@ import javafx.scene.layout.Pane;
 
 public class winState extends GameState {
 
+    /**
+     * default constructor
+     * @param gsm -  super for the game state manager
+     */
     public winState(GameStateManager gsm) {
         super(gsm);
     }
