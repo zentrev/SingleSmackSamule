@@ -30,7 +30,7 @@ public class Event1 extends Event {
 
     @Override
     public void commitAttackEvent() {
-        System.out.println("Event Attacked");           
+        System.out.println("Event Attacked");
     }
 
 
