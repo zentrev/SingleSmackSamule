@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 public class HelpState extends GameState{
+
     private String moveHelp = "Samuel is controlled by using W A S keys.\n" +
             "A is to move left,\n D is to move right,\n and W is to jump.";
     private String otherHelp = "The K and J keys are used to attack and use items.\n" +
@@ -18,7 +19,10 @@ public class HelpState extends GameState{
 
     private Text text;
 
-
+    /**
+     * default constructor
+     * @param gsm - the super of the game state manager
+     */
     HelpState(GameStateManager gsm){super(gsm);}
 
     @Override

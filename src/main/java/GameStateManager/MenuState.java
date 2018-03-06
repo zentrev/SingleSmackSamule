@@ -18,6 +18,10 @@ public class MenuState extends GameState{
     private int currentChoice;
 
 
+    /**
+     * default constructor
+     * @param gsm - the super for the game state manager
+     */
     public MenuState(GameStateManager gsm){
         super(gsm);
     }
@@ -59,6 +63,9 @@ public class MenuState extends GameState{
 
     }
 
+    /**
+     * commits the user's chosen option and goes to wherever the option leads to
+     */
     public void commitOption(){
         switch (currentChoice) {
             case 0:
