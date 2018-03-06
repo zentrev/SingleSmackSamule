@@ -19,7 +19,7 @@ public class HelpState extends GameState{
     private Text text;
 
 
-    public HelpState(GameStateManager gsm){super(gsm);}
+    HelpState(GameStateManager gsm){super(gsm);}
 
     @Override
     public void init(Pane gamePane) {
@@ -62,7 +62,7 @@ public class HelpState extends GameState{
 
     @Override
     public void handle(Event event) {
-        if(event.getEventType() == KeyEvent.KEY_RELEASED){
+        if(event.getEventType() == KeyEvent.KEY_RELEASED) {
             KeyEvent keyEvent = (KeyEvent)event;
             switch(keyEvent.getCode()){
                 case ESCAPE:
