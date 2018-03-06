@@ -12,10 +12,17 @@ public class Animator{
 
     private boolean playedOnce;
 
+    /**
+     * default constructor
+     */
     public void Animation(){
         playedOnce = false;
     }
 
+    /**
+     * sets the frame to swap between
+     * @param frames - Image array of sprits to swap between
+     */
     public void setFrames(Image[] frames) {
         this.frames = frames;
         currentFrame = 0;
@@ -23,14 +30,17 @@ public class Animator{
         playedOnce = false;
     }
 
+    /**
+     * sets the time to delay between image swaps
+     * @param delay - time to delay
+     */
     public void setDelay(long delay) {
         this.delay = delay;
     }
 
-    public void setFrame(int currentFrame){
-        this.currentFrame = currentFrame;
-    }
-
+    /**
+     * updates the animator and if delay has passes it changes the current frame
+     */
     public void update(){
 
         if(delay == -1) return;
@@ -48,8 +58,16 @@ public class Animator{
 
     }
 
-    public int getFrame() {return currentFrame;};
+    /**
+     * returns the current image in the frames
+     * @return - image currently animating
+     */
     public Image getImage(){ return frames[currentFrame];}
+
+    /**
+     * returns if the animation has played one
+     * @return - true if played once false if not
+     */
     public boolean hasPlayedOnce(){return playedOnce;}
 
 }
