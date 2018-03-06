@@ -54,18 +54,33 @@ abstract public class Entity extends ImageView {
     protected ArrayList<Image[]> sprites;
     protected int[] numFrames;
 
+    /**
+     * default constructor
+     * @param tileMap - the tilemap of the relative map
+     */
     public Entity(Tile[][] tileMap) {
         this.setTileMap(tileMap);
     }
 
+    /**
+     * returns the tilemap connected to this entity
+     * @return
+     */
     public Tile[][] getTileMap() {
         return tileMap;
     }
 
+    /**
+     *
+     * @param tileMap
+     */
     public void setTileMap(Tile[][] tileMap) {
         this.tileMap = tileMap;
     }
 
+    /**
+     * checks the collision of the velocity of this entity
+     */
     public void checkCollision() {
         fallingOption = true;
         upOption = true;
@@ -115,10 +130,16 @@ abstract public class Entity extends ImageView {
         }
     }
 
+    /**
+     * updates all needed things for the entity
+     */
     public void update() {
         checkCollision();
     }
 
+    /**
+     * draws the entity
+     */
     public void draw() {
 
     }

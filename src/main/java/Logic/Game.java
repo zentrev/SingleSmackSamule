@@ -31,6 +31,9 @@ public class Game extends Stage implements EventHandler{
     public static Pane UIPane;
 
 
+    /**
+     * default constructor
+     */
     public Game(){
         this.setTitle("Single Smack Samuel");
         gamePane = new Pane();
@@ -61,14 +64,23 @@ public class Game extends Stage implements EventHandler{
     }
 
 
-
+    /**
+     * initiates a new game state manage and set it to gsm
+     */
     public void init(){
         gsm = new GameStateManager(gamePane, this);
     }
 
+    /**
+     * updates the gsm
+     */
     public void update(){
         gsm.update();
     }
+
+    /**
+     * calls the gsm draw function and inputs gamepane
+     */
     public void draw(){
         gsm.draw(gamePane);
     }
