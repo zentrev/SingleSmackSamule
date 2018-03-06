@@ -5,6 +5,9 @@ import javafx.scene.image.Image;
 
 import static GameStateManager.RoomState.sam;
 
+/**
+ * makes a new item
+ */
 public class JasonNeededItem extends Item {
 
     JasonNeededItem(Tile[][] tm, double itemx, double itemy){
@@ -33,6 +36,9 @@ public class JasonNeededItem extends Item {
         this.isPicked = false;
     }
 
+    /**
+     * updates the collision and velocity
+     */
     public void update() {
 
         checkCollision();
@@ -49,6 +55,9 @@ public class JasonNeededItem extends Item {
         }
     }
 
+    /**
+     * checks to see if player has touched the item
+     */
     public void itemTouched(){
         System.out.println("My son!");
         isPicked = true;
