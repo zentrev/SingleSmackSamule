@@ -19,6 +19,12 @@ public class mon1 extends Monster {
     private static final int SLOSHING = 0;
     private int currentAction;
 
+    /**
+     * default constructor
+     * @param tileMap - tilemap for room
+     * @param monx - x position relative to tilemap
+     * @param mony - y position relative to tilemap
+     */
     public mon1(Tile[][] tileMap, double monx, double mony) {
         super(tileMap);
         this.x = monx;
@@ -68,6 +74,7 @@ public class mon1 extends Monster {
         movingLeft = true;
     }
 
+    @Override
     public void draw(){
         this.animation.update();
         this.setImage(animation.getImage());
@@ -78,6 +85,7 @@ public class mon1 extends Monster {
         }
     }
 
+    @Override
     public void update() {
 
         this.draw();
@@ -89,6 +97,10 @@ public class mon1 extends Monster {
 
     }
 
+    /**
+     * checks if the monster can attack sam
+     * @return - true if it can attack sam, false if not
+     */
     public boolean checkAttacking() {
         if (sam.getBoundsInParent().intersects(this.getBoundsInParent()) && !sam.invince) {
             sam.damage(1);
@@ -99,6 +111,9 @@ public class mon1 extends Monster {
         return false;
     }
 
+    /**
+     * move by the set Velocity if available
+     */
     public void moveVelocity() {
         if (leftOption && movingLeft) {
             x += xVelocity;
@@ -120,6 +135,9 @@ public class mon1 extends Monster {
         }
     }
 
+    /**
+     * changes the Velocity for the monster
+     */
     public void changeVelocity() {
         if (movingLeft) {
             xVelocity = moveSpeed * -1;

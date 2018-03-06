@@ -11,6 +11,12 @@ public class winDoor extends Event {
     private boolean joseItem;
     private boolean fagotronsItem;
 
+    /**
+     * default constructor
+     * @param tileMap - tilemap for the room
+     * @param eventx - x position relative to tilemap
+     * @param eventy - y position relative to tilemap
+     */
     public winDoor(Tile[][] tileMap, int eventx, int eventy) {
         super(tileMap, eventx, eventy);
         jasonItem = false;
@@ -38,6 +44,7 @@ public class winDoor extends Event {
 
     }
 
+    @Override
     public void update(){
         if(this.getBoundsInParent().intersects(sam.getBoundsInParent())){
             commitEvent();

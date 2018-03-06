@@ -11,6 +11,15 @@ public class DoorWay extends Event {
     private double samXDest;
     private double samYDest;
 
+    /**
+     * default constructor
+     * @param tileMap - tilemap for the room
+     * @param roomDest - room the door leads to
+     * @param x - x pos of the door relative to tilemap
+     * @param y - y pos of the door relative to tilemap
+     * @param samXDest - x position to spawn samuel when moving to next room
+     * @param samYDest - y position to spawn samuel when moving to next room
+     */
     public DoorWay(Tile[][] tileMap, int roomDest, double x, double y, double samXDest, double samYDest){
         super(tileMap,(int)x,(int)y);
 
@@ -45,26 +54,44 @@ public class DoorWay extends Event {
 
     }
 
+    /**
+     * @return -  the room to move the player to when colliding with the door
+     */
     public int getRoomDest() {
         return roomDest;
     }
 
+    /**
+     * @param roomDest - the room to move the player when colliding with the door
+     */
     public void setRoomDest(int roomDest) {
         this.roomDest = roomDest;
     }
 
+    /**
+     * @return -  the x position samuel will spawn when moving rooms
+     */
     public double getSamXDest() {
         return samXDest;
     }
 
+    /**
+     * @param samXDest - set the x position samuel will spawn when moving rooms
+     */
     public void setSamXDest(double samXDest) {
         this.samXDest = samXDest;
     }
 
+    /**
+     * @return - the y positon samel will spawn when moving rooms
+     */
     public double getSamYDest() {
         return samYDest;
     }
 
+    /**
+     * @param samYDest -  set eh position samuel will spawn when moving rooms
+     */
     public void setSamYDest(double samYDest) {
         this.samYDest = samYDest;
     }
