@@ -26,4 +26,6 @@ public class Event1 extends Event {
     public void commitEvent() {
         System.out.println("Event contacted");
     }
+
+
 }
