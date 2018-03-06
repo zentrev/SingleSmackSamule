@@ -63,7 +63,7 @@ public class Game extends Stage implements EventHandler{
 
 
     public void init(){
-        gsm = new GameStateManager(gamePane);
+        gsm = new GameStateManager(gamePane, this);
     }
 
     public void update(){

@@ -1,9 +1,12 @@
 package GameStateManager;
 
+import Logic.Game;
+import Logic.Main;
 import javafx.event.Event;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 
@@ -40,7 +43,16 @@ public class MenuState extends GameState{
 
     @Override
     public void update() {
-
+        for(int i = 0; i < options.length; i++){
+            text = new Text();
+            text.setText(options[i]);
+            text.setX(100);
+            text.setY(50+(i*20));
+            if(currentChoice == i){
+                text.setFill(Color.RED);
+            }
+            gsm.getGamePane().getChildren().add(text);
+        }
     }
 
     @Override
@@ -48,10 +60,44 @@ public class MenuState extends GameState{
 
     }
 
+    public void commitOption(){
+        switch (currentChoice) {
+            case 0:
+            gsm.setState(GameStateManager.STATE.ROOMSTATE);
+            break;
+            case 1:
+                System.out.println("wasd to move, k to attack");
+                break;
+            case 2:
+                gsm.closeGame();
+
+        }
+    }
+
     @Override
     public void handle(Event event) {
-        if(event.getEventType() == KeyEvent.KEY_PRESSED){
-            gsm.setState(GameStateManager.STATE.ROOMSTATE);
+        if(event.getEventType() == KeyEvent.KEY_RELEASED){
+            KeyEvent keyEvent = (KeyEvent)event;
+            switch (keyEvent.getCode()){
+                case S:
+                case DOWN:
+                    currentChoice++;
+                    if(currentChoice == options.length){
+                        currentChoice = 0;
+                    }
+                    break;
+                case UP:
+                case W:
+                    currentChoice--;
+                    if(currentChoice < 0){
+                        currentChoice = options.length-1;
+                    }
+                    break;
+                case ENTER:
+                    commitOption();
+                    break;
+            }
+            //gsm.setState(GameStateManager.STATE.ROOMSTATE);
         }
     }
 }

@@ -17,6 +17,8 @@ public class GameStateManager {
 
     private Pane gamePane;
 
+    private Game game;
+
     public static enum STATE {
         MENUSTATE,
         SETTIGS,
@@ -26,9 +28,10 @@ public class GameStateManager {
     public static MenuState MENU;
     public static RoomState ROOM;
 
-    public GameStateManager(Pane gamePane){
+    public GameStateManager(Pane gamePane, Game game){
 
         this.gamePane = gamePane;
+        this.game = game;
 
         gameStates = new HashMap<STATE, GameState>();
         gameStates.put(MENUSTATE, MENU = new MenuState(this));
@@ -53,6 +56,10 @@ public class GameStateManager {
         Game.backgroundPane.setFitWidth(Game.WIDTH*Game.SCALE);
         Game.backgroundPane.setFitHeight(Game.HEIGHT*Game.SCALE);
 
+    }
+
+    public void closeGame(){
+        this.game.close();
     }
 
     public void draw(Pane gamePane){

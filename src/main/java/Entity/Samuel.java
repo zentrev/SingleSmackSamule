@@ -182,7 +182,6 @@ public class Samuel extends Entity {
 
             roomState.getRooms().get(roomState.getCurrentRoom()).checkMonsterCollision(bound);
             roomState.getRooms().get(roomState.getCurrentRoom()).checkEventCollision(bound);
-
         }
     }
 
@@ -324,8 +323,10 @@ public class Samuel extends Entity {
                     animation.setDelay(100);
                     heAttack();
                     break;
-
+                case ESCAPE:
+                    roomState.getGSM().closeGame();
             }
+
         }
         if (event.getEventType() == KeyEvent.KEY_RELEASED) {
             KeyEvent keyEvent = (KeyEvent) event;

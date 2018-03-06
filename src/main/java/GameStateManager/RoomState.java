@@ -25,6 +25,10 @@ public class RoomState extends GameState {
         currentRoom = 0;
     }
 
+    public GameStateManager getGSM(){
+        return gsm;
+    }
+
 
     public void changeRoom(int roomNumber, int samX, int samY) {
         gsm.getGamePane().getChildren().clear();

@@ -1,6 +1,7 @@
 package Entity.Events;
 
 import GameStateManager.Room;
+import GameStateManager.RoomState;
 import TileMap.*;
 
 public class Event1 extends Event {
@@ -29,7 +30,7 @@ public class Event1 extends Event {
 
     @Override
     public void commitAttackEvent() {
-
+        System.out.println("Event Attacked");           
     }
 
 

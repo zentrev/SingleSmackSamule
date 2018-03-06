@@ -9,13 +9,16 @@ public class Main extends Application{
     }
 
     public Game game;
+    GameThread gameThread;
 
     public void start(Stage primaryStage) throws Exception {
-
-
         game = new Game();
         game.show();
-        GameThread gameThread = new GameThread(game);
+        gameThread = new GameThread(game);
         gameThread.start(null);
+    }
+
+    public void close(){
+        game.close();
     }
 }

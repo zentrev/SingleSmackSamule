@@ -40,6 +40,11 @@ public class DoorWay extends Event {
         GameStateManager.ROOM.changeRoom(roomDest,(int)samXDest,(int)samYDest);
     }
 
+    @Override
+    public void commitAttackEvent() {
+
+    }
+
     public int getRoomDest() {
         return roomDest;
     }
