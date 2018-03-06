@@ -12,10 +12,11 @@ public class MenuState extends GameState{
 
     private String[] options = {
             "Play",
-            "Options",
+            "Help",
             "Quit"
     };
     private int currentChoice;
+
 
     public MenuState(GameStateManager gsm){
         super(gsm);
@@ -64,7 +65,7 @@ public class MenuState extends GameState{
             gsm.newRoomState();
             break;
             case 1:
-                System.out.println("wasd to move, k to attack");
+                gsm.setState(GameStateManager.STATE.HELPSTATE);
                 break;
             case 2:
                 gsm.closeGame();

@@ -20,13 +20,14 @@ public class GameStateManager {
 
     public enum STATE {
         MENUSTATE,
-        SETTIGS,
+        HELPSTATE,
         ROOMSTATE,
         DEATH,
         WIN
     }
 
     public static MenuState MENU;
+    public static HelpState HELP;
     public static RoomState ROOM;
     public static Death DEAD;
     public static winState WINSTATE;
@@ -39,6 +40,7 @@ public class GameStateManager {
         gameStates = new HashMap<STATE, GameState>();
         gameStates.put(MENUSTATE, MENU = new MenuState(this));
         gameStates.put(ROOMSTATE, ROOM = new RoomState(this));
+        gameStates.put(HELPSTATE, HELP = new HelpState(this));
         gameStates.put(DEATH, DEAD = new Death(this));
         gameStates.put(WIN, WINSTATE = new winState(this));
         setState(MENUSTATE);

@@ -19,6 +19,8 @@ public class EventFactory {
         switch(eventId){
             case 1:
                 return new Event1(tileMap, x* Room.tileSize, y*Room.tileSize);
+            case 2:
+                return new winDoor(tileMap, x* Room.tileSize, y*Room.tileSize);
             default:
                 return null;
         }
