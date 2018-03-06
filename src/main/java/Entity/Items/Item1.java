@@ -6,6 +6,12 @@ import javafx.scene.image.Image;
 
 public class Item1 extends Item {
 
+    /**
+     * default constructor
+     * @param  - tilemap for room
+     * @param itemx - x pos relative to tilemap
+     * @param itemy - y pos relative to tilemap
+     */
     Item1(Tile[][] tm, double itemx, double itemy){
         super(tm);
         this.x = itemx + 16;
@@ -32,6 +38,8 @@ public class Item1 extends Item {
         this.isPicked = false;
     }
 
+
+    @Override
     public void update() {
 
         checkCollision();
@@ -39,6 +47,9 @@ public class Item1 extends Item {
 
     }
 
+    /**
+     * move the item by velocity
+     */
     private void moveVelocity(){
         yVelocity = fallSpeed;
         if(fallingOption){
@@ -48,6 +59,7 @@ public class Item1 extends Item {
         }
     }
 
+    @Override
     public void itemTouched(){
         System.out.println("My son!");
         this.setVisible(false);
