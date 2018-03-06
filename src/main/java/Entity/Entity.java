@@ -138,7 +138,7 @@ abstract public class Entity extends ImageView {
     }
 
     /**
-     * draws the entity if needed
+     * draws the entity
      */
     public void draw() {
 
