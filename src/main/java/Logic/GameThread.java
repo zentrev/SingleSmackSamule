@@ -8,6 +8,10 @@ public class GameThread extends Application {
 
     Game game;
 
+    /**
+     * default constructor
+     * @param game - the stage we will be working with
+     */
     GameThread(Game game){
         this.game = game;
     }
