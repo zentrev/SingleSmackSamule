@@ -62,7 +62,7 @@ public class MenuState extends GameState{
     public void commitOption(){
         switch (currentChoice) {
             case 0:
-            gsm.setState(GameStateManager.STATE.ROOMSTATE);
+            gsm.newRoomState();
             break;
             case 1:
                 gsm.setState(GameStateManager.STATE.HELPSTATE);

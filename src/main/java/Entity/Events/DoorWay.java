@@ -12,7 +12,7 @@ public class DoorWay extends Event {
     private double samYDest;
 
     public DoorWay(Tile[][] tileMap, int roomDest, double x, double y, double samXDest, double samYDest){
-        super(tileMap);
+        super(tileMap,(int)x,(int)y);
 
         this.x = x*Room.tileSize;
         this.y = y*Room.tileSize;

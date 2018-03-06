@@ -4,17 +4,16 @@ import javafx.event.Event;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
-public class Death extends GameState {
+public class winState extends GameState {
 
-
-    public Death(GameStateManager gsm) {
+    public winState(GameStateManager gsm) {
         super(gsm);
     }
 
     @Override
     public void init(Pane gamePane) {
         //set background
-       // gsm.setBackground();
+        // gsm.setBackground();
     }
 
     @Override
@@ -29,7 +28,7 @@ public class Death extends GameState {
 
     @Override
     public void handle(Event event) {
-        if(event.getEventType() ==  KeyEvent.KEY_RELEASED){
+        if (event.getEventType() == KeyEvent.KEY_RELEASED) {
             gsm.setState(GameStateManager.STATE.MENUSTATE);
         }
     }

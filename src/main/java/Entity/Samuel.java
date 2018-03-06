@@ -51,6 +51,8 @@ public class Samuel extends Entity {
     private boolean flinching;
     public boolean invince;
 
+    private boolean eventAction;
+
     public Samuel(Tile[][] tileMap, RoomState roomState) {
         super(tileMap);
         this.roomState = roomState;
@@ -78,6 +80,7 @@ public class Samuel extends Entity {
         fallSpeed = .5;
         maxFallSpeed = 8;
         jumpStartVelecity = -13;
+        eventAction = false;
         setTranslateX(x);
         setTranslateY(y);
         setFitHeight(height);
@@ -146,13 +149,16 @@ public class Samuel extends Entity {
         }
     }
 
+    public void addItems(Item item){
+        samsItems.add(item);
+    }
 
     private void updateUI() {
         UIPane.getChildren().clear();
         UIPane.getChildren().addAll(H1, H2, H3);
-        for (int i = 0; i > samsItems.size(); i++) {
-            samsItems.get(i).setTranslateX(10);
-            samsItems.get(i).setTranslateY(35 * i);
+        for (int i = 0; i < samsItems.size(); i++) {
+            samsItems.get(i).setTranslateX(20);
+            samsItems.get(i).setTranslateY(35 * (i+1));
             UIPane.getChildren().add(samsItems.get(i));
         }
     }
@@ -331,6 +337,9 @@ public class Samuel extends Entity {
                     animation.setDelay(100);
                     heAttack();
                     break;
+                case J:
+                    eventAction = true;
+                    break;
                 case ESCAPE:
                     roomState.getGSM().closeGame();
             }
@@ -347,6 +356,9 @@ public class Samuel extends Entity {
                     break;
                 case W:
                     jumping = false;
+                    break;
+                case J:
+                    eventAction = false;
                     break;
             }
         }
@@ -397,6 +409,10 @@ public class Samuel extends Entity {
         } else {
             this.setVisible(false);
         }
+    }
+
+    public boolean getEventAction(){
+        return eventAction;
     }
 
     public void damage(int damage) {

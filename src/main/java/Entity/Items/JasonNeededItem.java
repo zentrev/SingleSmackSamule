@@ -3,6 +3,8 @@ package Entity.Items;
 import TileMap.Tile;
 import javafx.scene.image.Image;
 
+import static GameStateManager.RoomState.sam;
+
 public class JasonNeededItem extends Item {
 
     JasonNeededItem(Tile[][] tm, double itemx, double itemy){
@@ -49,7 +51,7 @@ public class JasonNeededItem extends Item {
 
     public void itemTouched(){
         System.out.println("My son!");
-        this.setVisible(false);
         isPicked = true;
+        sam.addItems(this);
     }
 }
