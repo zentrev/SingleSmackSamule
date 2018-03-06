@@ -14,19 +14,33 @@ abstract public class Item extends Entity {
 
     protected boolean isPicked;
 
-
+    /**
+     * creates the tile map for the levels
+     * @param tileMap - the tile map for the level
+     */
     public Item(Tile[][] tileMap) {
         super(tileMap);
     }
 
+    /**
+     * returns a room that the item is in
+     * @return - room that houses an item
+     */
     public Room getRoom() {
         return room;
     }
 
+    /**
+     * sets the room that the item is in
+     * @param room - the room that houses the item
+     */
     public void setRoom(Room room) {
         this.room = room;
     }
 
+    /**
+     * checks if Samuel collides with the item
+     */
     abstract public void itemTouched();
 
     @Override
@@ -38,10 +52,18 @@ abstract public class Item extends Entity {
         return false;
     }
 
+    /**
+     * checks if the item has been picked up
+     * @return - the result of the item being picked up. True = item has been picked up. False = item has not been picked up
+     */
     public boolean isPicked() {
         return isPicked;
     }
 
+    /**
+     * sets the true/false for the item being picked up
+     * @param picked - the result of the item being picked up
+     */
     public void setPicked(boolean picked) {
         isPicked = picked;
     }
