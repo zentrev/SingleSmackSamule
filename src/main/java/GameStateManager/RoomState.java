@@ -4,7 +4,10 @@ import Entity.*;
 import Logic.Game;
 import javafx.event.Event;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 
+import java.net.URL;
 import java.util.ArrayList;
 
 public class RoomState extends GameState {
@@ -48,6 +51,12 @@ public class RoomState extends GameState {
             gsm.getGamePane().setTranslateY(0);
         } else if(samY > Game.HEIGHT/2 && samY < rooms.get(currentRoom).getHeight()-Game.HEIGHT/2){
             gsm.getGamePane().setTranslateY(samY);
+        }
+        if(roomNumber == 9){
+            final URL resource = getClass().getResource("/Assets/sound/theyDontStop.mp3");
+            final Media media = new Media(resource.toString());
+            final MediaPlayer mediaPlayer = new MediaPlayer(media);
+            mediaPlayer.play();
         }
     }
 

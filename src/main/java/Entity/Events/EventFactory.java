@@ -25,6 +25,8 @@ public class EventFactory {
                 return new Event3(tileMap, x* Room.tileSize, y*Room.tileSize, room);
             case 4:
                 return new Event4(tileMap, x*Room.tileSize, y*Room.tileSize, room);
+            case 5:
+                return new snailGen(tileMap, x*Room.tileSize, y*Room.tileSize, room);
             default:
                 return null;
         }

@@ -311,4 +311,9 @@ public class Room {
     public GameStateManager getGsm() {
         return gsm;
     }
+
+    public void addMon(Monster mon){
+        monsters.add(mon);
+        gsm.getGamePane().getChildren().add(mon);
+    }
 }
