@@ -15,12 +15,12 @@ public class EventFactory {
      * @param y
      * @return the tileMap, room tile size for x and y.
      */
-    public Event getEvent(Tile[][] tileMap, int eventId, int x, int y){
+    public Event getEvent(Tile[][] tileMap, int eventId, int x, int y, Room room){
         switch(eventId){
             case 1:
                 return new Event1(tileMap, x* Room.tileSize, y*Room.tileSize);
             case 2:
-                return new winDoor(tileMap, x* Room.tileSize, y*Room.tileSize);
+                return new winDoor(tileMap, x* Room.tileSize, y*Room.tileSize, room);
             default:
                 return null;
         }

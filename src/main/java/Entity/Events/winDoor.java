@@ -2,7 +2,7 @@ package Entity.Events;
 
 import Entity.Items.JasonNeededItem;
 import Entity.Items.stick;
-import GameStateManager.GameStateManager;
+import GameStateManager.*;
 import Logic.Game;
 import TileMap.Tile;
 
@@ -20,8 +20,8 @@ public class winDoor extends Event {
      * @param eventx - x position relative to tilemap
      * @param eventy - y position relative to tilemap
      */
-    public winDoor(Tile[][] tileMap, int eventx, int eventy) {
-        super(tileMap, eventx, eventy);
+    public winDoor(Tile[][] tileMap, int eventx, int eventy, Room room) {
+        super(tileMap, eventx, eventy, room);
         jasonItem = false;
         joseItem = false;
         fagotronsItem = false;
@@ -39,7 +39,7 @@ public class winDoor extends Event {
                 }
             }
             if(jasonItem && fagotronsItem) {
-                Game.gsm.setState(GameStateManager.STATE.WIN);
+                room.getGsm().setState(GameStateManager.STATE.WIN);
             }
         }
         System.out.println("here");

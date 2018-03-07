@@ -22,7 +22,7 @@ public class Game extends Stage implements EventHandler{
     public boolean running;
 
     // game state manager
-    public static GameStateManager gsm;
+    private GameStateManager gsm;
 
     // panes
     private Pane gamePane;
@@ -79,7 +79,7 @@ public class Game extends Stage implements EventHandler{
     }
 
     /**
-     * calls the gsm draw function and inputs gamepane
+     *
      */
     public void draw(){
         gsm.draw(gamePane);

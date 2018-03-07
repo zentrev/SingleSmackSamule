@@ -177,7 +177,7 @@ public class Room {
                 int eventNum = Integer.parseInt(tokens[0]);
                 int eventx = Integer.parseInt(tokens[1]);
                 int eventy = Integer.parseInt(tokens[2]);
-                Event thisEvent = EF.getEvent(tileMap, eventNum, eventx, eventy);
+                Event thisEvent = EF.getEvent(tileMap, eventNum, eventx, eventy, this);
                 events.add(thisEvent);
                 events.removeAll(activatedEvents);
             }
@@ -304,5 +304,11 @@ public class Room {
         return tileSize;
     }
 
+    public HashMap<Integer,Image> getTileSheet(){
+        return tileSheet;
+    }
 
+    public GameStateManager getGsm() {
+        return gsm;
+    }
 }
