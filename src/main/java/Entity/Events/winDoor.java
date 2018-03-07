@@ -38,7 +38,7 @@ public class winDoor extends Event {
                     fagotronsItem = true;
                 }
             }
-            if(jasonItem && fagotronsItem) {
+            if(jasonItem && fagotronsItem && joseItem) {
                 room.getGsm().setState(GameStateManager.STATE.WIN);
             }
         }

@@ -34,6 +34,11 @@ public class snailGen extends Event {
             Monster snail = mf.getMonster(tileMap,1,8,4);
             room.addMon(snail);
             startTime = System.nanoTime();
+            if(delay < 3000){
+                delay+=50;
+            } else {
+                delay += 100;
+            }
         }
     }
 }
