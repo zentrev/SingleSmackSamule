@@ -68,6 +68,8 @@ public class GameStateManager {
     public void setState(STATE state){
         currentState = state;
         gamePane.getChildren().clear();
+        gamePane.setTranslateY(0);
+        gamePane.setTranslateX(0);
         gameStates.get(currentState).init(gamePane);
         Game.UIPane.getChildren().clear();
     }

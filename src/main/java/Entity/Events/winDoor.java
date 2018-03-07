@@ -1,6 +1,9 @@
 package Entity.Events;
 
 import Entity.Items.JasonNeededItem;
+import Entity.Items.stick;
+import GameStateManager.GameStateManager;
+import Logic.Game;
 import TileMap.Tile;
 
 import static GameStateManager.RoomState.sam;
@@ -31,9 +34,12 @@ public class winDoor extends Event {
                 if(sam.samsItems.get(i) instanceof JasonNeededItem){
                     jasonItem = true;
                 }
+                if(sam.samsItems.get(i) instanceof stick){
+                    fagotronsItem = true;
+                }
             }
-            if(jasonItem) {
-                System.out.println("winner");
+            if(jasonItem && fagotronsItem) {
+                Game.gsm.setState(GameStateManager.STATE.WIN);
             }
         }
         System.out.println("here");

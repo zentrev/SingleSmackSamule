@@ -14,7 +14,7 @@ public class RoomState extends GameState {
 
     public static Samuel sam;
 
-    private static final int NUMBEROFROOMS = 9;
+    private static final int NUMBEROFROOMS = 10;
 
     public RoomState(GameStateManager gsm) {
         super(gsm);
@@ -23,10 +23,13 @@ public class RoomState extends GameState {
             rooms.get(i).init(gsm.getGamePane());
         }
         currentRoom = 0;
+        gsm.getGamePane().setTranslateX(0);
+        gsm.getGamePane().setTranslateY(0);
     }
 
     public GameStateManager getGSM(){
         return gsm;
+
     }
 
 
