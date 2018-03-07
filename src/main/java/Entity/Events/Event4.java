@@ -1,38 +1,36 @@
 package Entity.Events;
 
 import GameStateManager.Room;
-import GameStateManager.RoomState;
-import TileMap.*;
+import TileMap.Tile;
+import TileMap.TileType;
 import javafx.scene.image.Image;
 
 import static GameStateManager.RoomState.sam;
 
-public class Event1 extends Event {
+public class Event4 extends Event{
     /**
      * default constructor
      * @param tm - tilemap for the room
      * @param eventx - x position to place the event relative to the tilemap
      * @param eventy - y position to place the event relative to the tilemap
      */
-    public Event1(Tile[][] tm, int eventx, int eventy, Room room){
+    public Event4(Tile[][] tm, int eventx, int eventy, Room room){
         super(tm,eventx,eventy,room);
-        this.setImage(new Image("/Assets/Events/lever.png"));
+        this.setImage(new Image("Assets/Events/lever.png"));
         room.getGsm().getGamePane().getChildren().add(this);
     }
 
     @Override
     public void commitEvent() {
-        System.out.println("Event contacted");
+        System.out.println("Event4 contacted");
     }
 
     @Override
     public void commitAttackEvent() {
-        System.out.println("Event1 Attacked");
+        System.out.println("Event4 Attacked");
         Image bg = room.getTileSheet().get(5);
-        tileMap[11][8].setImage(bg);
-        tileMap[11][8].setTileType(TileType.NORMAL);
+        tileMap[23][3].setImage(bg);
+        tileMap[23][3].setTileType(TileType.NORMAL);
         sam.setTileMap(tileMap);
     }
-
-
 }

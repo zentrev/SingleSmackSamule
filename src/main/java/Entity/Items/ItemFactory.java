@@ -23,6 +23,8 @@ public class ItemFactory {
                 return new JasonNeededItem(tileMap, x * Room.tileSize, y * Room.tileSize);
             case 3:
                 return new stick(tileMap, x * Room.tileSize, y * Room.tileSize);
+            case 4:
+                return new Microwave(tileMap, x*Room.tileSize, y*Room.tileSize);
             default:
                 return null;
         }
