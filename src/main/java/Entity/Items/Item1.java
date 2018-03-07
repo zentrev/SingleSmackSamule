@@ -4,6 +4,8 @@ import GameStateManager.RoomState;
 import TileMap.Tile;
 import javafx.scene.image.Image;
 
+import static GameStateManager.RoomState.sam;
+
 public class Item1 extends Item {
 
     /**
@@ -33,7 +35,7 @@ public class Item1 extends Item {
         this.setTranslateX(x);
         this.setTranslateY(y);
 
-        this.setImage(new Image("Assets/SpriteSheets/Google_Ultron.png"));
+        this.setImage(new Image("Assets/items/health.png"));
 
         this.isPicked = false;
     }
@@ -64,6 +66,7 @@ public class Item1 extends Item {
         System.out.println("My son!");
         this.setVisible(false);
         isPicked = true;
+        sam.damage(-1);
     }
 
 }

@@ -27,7 +27,7 @@ public class stick extends Item {
         this.setTranslateX(x);
         this.setTranslateY(y);
 
-        this.setImage(new Image("Assets/Items/Item.png"));
+        this.setImage(new Image("Assets/Items/stick.png"));
 
         this.isPicked = false;
     }

@@ -1,6 +1,7 @@
 package GameStateManager;
 
 import javafx.event.Event;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 
@@ -33,7 +34,10 @@ public class winState extends GameState {
     @Override
     public void handle(Event event) {
         if (event.getEventType() == KeyEvent.KEY_RELEASED) {
-            gsm.setState(GameStateManager.STATE.MENUSTATE);
+            KeyEvent keyEvent = (KeyEvent)event;
+            if(keyEvent.getCode() == KeyCode.SPACE || keyEvent.getCode() == KeyCode.ENTER) {
+                gsm.setState(GameStateManager.STATE.MENUSTATE);
+            }
         }
     }
 }
