@@ -53,6 +53,11 @@ public class Samuel extends Entity {
 
     private boolean eventAction;
 
+    /**
+     * default constructor
+     * @param tileMap - the part of the tile map Samuel will spawn in
+     * @param roomState - the room Samuel is in
+     */
     public Samuel(Tile[][] tileMap, RoomState roomState) {
         super(tileMap);
         this.roomState = roomState;
@@ -118,6 +123,12 @@ public class Samuel extends Entity {
 
     }
 
+    /**
+     * loads a new instance of Samuel
+     * @param tileMap - the part of the tile map Samuel is in
+     * @param samX - Samuel's X position
+     * @param samY - Samuel's Y position
+     */
     public void loadSam(Tile[][] tileMap, int samX, int samY) {
         this.tileMap = tileMap;
         this.x = samX;
@@ -127,6 +138,9 @@ public class Samuel extends Entity {
         this.setTranslateY(y);
     }
 
+    /**
+     * updates Samuel's state
+     */
     public void update() {
         if (HEALTH > 0) {
             changeVelocity();
@@ -149,10 +163,17 @@ public class Samuel extends Entity {
         }
     }
 
+    /**
+     * adds an item to Samuel's inventory if he picks one up
+     * @param item - the item Samuel picked up
+     */
     public void addItems(Item item){
         samsItems.add(item);
     }
 
+    /**
+     * updates the HUD
+     */
     private void updateUI() {
         UIPane.getChildren().clear();
         UIPane.getChildren().addAll(H1, H2, H3);
@@ -163,6 +184,9 @@ public class Samuel extends Entity {
         }
     }
 
+    /**
+     * checks if Samuel is attacking
+     */
     private void checkAttacking() {
         if (atacking) {
             long elapsed = (System.nanoTime() - startTime) / 1000000;
@@ -178,6 +202,9 @@ public class Samuel extends Entity {
         }
     }
 
+    /**
+     * sends out Samuel's attack if he is attacking
+     */
     private void heAttack() {
         if(HEALTH != 0) {
             Rectangle bound = new Rectangle();
@@ -199,10 +226,16 @@ public class Samuel extends Entity {
         }
     }
 
+    /**
+     * checks if Samuel collides with a blocked tile
+     */
     public void checkCollision() {
         super.checkCollision();
     }
 
+    /**
+     * moves Samuel by his velocity
+     */
     private void moveVelocity() {
         if (fallingOption) {
             setTranslateY(y + yVelocity);
@@ -236,6 +269,9 @@ public class Samuel extends Entity {
         }
     }
 
+    /**
+     * moves Samuel is moving left and right
+     */
     private void xMovement() {
         if (right) {
             if (rightOption) {
@@ -277,6 +313,9 @@ public class Samuel extends Entity {
         }
     }
 
+    /**
+     * changes how fast Samuel moves
+     */
     private void changeVelocity() {
 
         if (fallingOption) {
@@ -316,6 +355,10 @@ public class Samuel extends Entity {
         }
     }
 
+    /**
+     * takes user input and triggers events with said inputs
+     * @param event - the event that is triggered from the user's inputs
+     */
     public void handle(Event event) {
         if (event.getEventType() == KeyEvent.KEY_PRESSED) {
             KeyEvent keyEvent = (KeyEvent) event;
@@ -364,6 +407,9 @@ public class Samuel extends Entity {
         }
     }
 
+    /**
+     * animates Samuel's movements
+     */
     public void draw() {
         this.animation.update();
         this.setImage(animation.getImage());
@@ -374,6 +420,10 @@ public class Samuel extends Entity {
         }
     }
 
+    /**
+     * causes Samuel to flinch after being attacked by an enemy
+     * @param startTime - the time when Samuel starts flinching
+     */
     public void flinch(Long startTime) {
         this.flinchTime = startTime;
         flinching = true;
@@ -381,6 +431,9 @@ public class Samuel extends Entity {
         delay = 100;
     }
 
+    /**
+     * checks if Samuel is flinching
+     */
     public void checkFlinching() {
         boolean visalbe = true;
         int flinchDelay = 400;
@@ -411,10 +464,18 @@ public class Samuel extends Entity {
         }
     }
 
+    /**
+     * checks whether or not an event was activated
+     * @return
+     */
     public boolean getEventAction(){
         return eventAction;
     }
 
+    /**
+     * Samuel's health. It goes down when he gets touched by an enemy.
+     * @param damage - the damage Samuel took from an enemy
+     */
     public void damage(int damage) {
         HEALTH -= damage;
         if (HEALTH == 3) {
