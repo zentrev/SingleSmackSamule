@@ -22,12 +22,10 @@ public class Event4 extends Event{
 
     @Override
     public void commitEvent() {
-        System.out.println("Event4 contacted");
     }
 
     @Override
     public void commitAttackEvent() {
-        System.out.println("Event4 Attacked");
         Image bg = room.getTileSheet().get(5);
         tileMap[23][3].setImage(bg);
         tileMap[23][3].setTileType(TileType.NORMAL);

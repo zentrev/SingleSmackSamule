@@ -4,6 +4,7 @@ import Entity.Monster.Monster;
 import Entity.Monster.MonsterFactory;
 import GameStateManager.Room;
 import TileMap.Tile;
+import javafx.scene.image.Image;
 
 public class snailGen extends Event {
 
@@ -15,6 +16,8 @@ public class snailGen extends Event {
         super(tileMap, x, y, room);
         startTime = System.nanoTime();
         delay = 2000;
+        this.setImage(new Image("Assets/Events/shell.png"));
+        room.getGsm().getGamePane().getChildren().add(this);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package Entity.Events;
 
 import Entity.Items.JasonNeededItem;
+import Entity.Items.Microwave;
 import Entity.Items.stick;
 import GameStateManager.*;
 import Logic.Game;
@@ -36,6 +37,9 @@ public class winDoor extends Event {
                 }
                 if(sam.samsItems.get(i) instanceof stick){
                     fagotronsItem = true;
+                }
+                if(sam.samsItems.get(i) instanceof Microwave){
+                    joseItem = true;
                 }
             }
             if(jasonItem && fagotronsItem && joseItem) {
