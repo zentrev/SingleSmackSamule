@@ -7,6 +7,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+import static javafx.scene.text.Font.font;
+
 
 public class MenuState extends GameState{
 
@@ -31,15 +33,9 @@ public class MenuState extends GameState{
     @Override
     public void init(Pane gamePane) {
         currentChoice = 0;
-        for(int i = 0; i < options.length; i++){
-            text = new Text();
-            text.setText(options[i]);
-            text.setX(100);
-            text.setY(50+(i*20));
-            gamePane.getChildren().add(text);
-        }
 
-        gsm.setBackground(new Image(getClass().getResourceAsStream("/Assets/SpriteSheets/Google_Ultron.png")));
+
+        gsm.setBackground(new Image(getClass().getResourceAsStream("/Assets/Backgrounds/menu.png")));
 
 
     }
@@ -48,14 +44,18 @@ public class MenuState extends GameState{
     public void update() {
         for(int i = 0; i < options.length; i++){
             text = new Text();
-            text.setText(options[i]);
-            text.setX(100);
-            text.setY(50+(i*20));
-            if(currentChoice == i){
+            if(i == currentChoice){
                 text.setFill(Color.RED);
+            } else {
+                text.setFill(Color.BLACK);
             }
+            text.setText(options[i]);
+            text.setFont(font ("Verdana", 40));
+            text.setX(500);
+            text.setY(500+(i*50));
             gsm.getGamePane().getChildren().add(text);
         }
+
     }
 
     @Override

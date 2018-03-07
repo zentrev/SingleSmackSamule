@@ -1,6 +1,7 @@
 package GameStateManager;
 
 import javafx.event.Event;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
@@ -18,7 +19,7 @@ public class winState extends GameState {
     @Override
     public void init(Pane gamePane) {
         //set background
-        // gsm.setBackground();
+        gsm.setBackground(new Image("/Assets/Backgrounds/win.png"));
     }
 
     @Override

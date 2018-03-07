@@ -1,4 +1,4 @@
-/Assets/Backgrounds/f854a3_6566d25b103646ce9c2a5438f8c78da4.jpg
+/Assets/Backgrounds/door.png
 /Assets/Tiles/jungletemp.png
 14
 9
@@ -17,5 +17,13 @@
 2 14 7 22 2
 0
 0
-1
+6
 2 3 5
+2 4 5
+2 5 5
+2 3 6
+2 4 6
+2 5 6
+2 3 7
+2 4 7
+2 5 7

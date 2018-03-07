@@ -42,7 +42,6 @@ public class winDoor extends Event {
                 room.getGsm().setState(GameStateManager.STATE.WIN);
             }
         }
-        System.out.println("here");
     }
 
     @Override
