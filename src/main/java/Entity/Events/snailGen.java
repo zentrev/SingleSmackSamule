@@ -38,7 +38,7 @@ public class snailGen extends Event {
             room.addMon(snail);
             startTime = System.nanoTime();
             if(delay < 3000){
-                delay+=50;
+                delay+=25;
             } else {
                 delay += 100;
             }
