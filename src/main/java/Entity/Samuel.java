@@ -1,6 +1,7 @@
 package Entity;
 
 import Entity.Items.Item;
+import GameStateManager.GameStateManager;
 import GameStateManager.Room;
 import GameStateManager.RoomState;
 import Logic.Game;
@@ -384,7 +385,7 @@ public class Samuel extends Entity {
                     eventAction = true;
                     break;
                 case ESCAPE:
-                    roomState.getGSM().closeGame();
+                    roomState.getGSM().setState(GameStateManager.STATE.MENUSTATE);
             }
 
         }
