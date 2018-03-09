@@ -30,6 +30,7 @@ public class Event1 extends Event {
         tileMap[11][8].setImage(bg);
         tileMap[11][8].setTileType(TileType.NORMAL);
         sam.setTileMap(tileMap);
+        setScaleX(-1);
     }
 
 

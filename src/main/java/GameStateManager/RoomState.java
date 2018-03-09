@@ -17,6 +17,11 @@ public class RoomState extends GameState {
 
     public static Samuel sam;
 
+    public static MediaPlayer mediaPlayer = null;
+    final URL resource = getClass().getResource("/Assets/sound/theyDontStop.mp3");
+    final Media media = new Media(resource.toString());
+    
+
     private static final int NUMBEROFROOMS = 10;
 
     public RoomState(GameStateManager gsm) {
@@ -28,6 +33,7 @@ public class RoomState extends GameState {
         currentRoom = 0;
         gsm.getGamePane().setTranslateX(0);
         gsm.getGamePane().setTranslateY(0);
+        mediaPlayer = new MediaPlayer(media);
     }
 
     public GameStateManager getGSM(){
@@ -52,10 +58,10 @@ public class RoomState extends GameState {
         } else if(samY > Game.HEIGHT/2 && samY < rooms.get(currentRoom).getHeight()-Game.HEIGHT/2){
             gsm.getGamePane().setTranslateY(samY);
         }
+
+
+
         if(roomNumber == 9){
-            final URL resource = getClass().getResource("/Assets/sound/theyDontStop.mp3");
-            final Media media = new Media(resource.toString());
-            final MediaPlayer mediaPlayer = new MediaPlayer(media);
             mediaPlayer.play();
         }
     }
@@ -63,6 +69,7 @@ public class RoomState extends GameState {
     public void samDies(){
         gsm.setState(GameStateManager.STATE.DEATH);
         System.out.println("cool");
+        mediaPlayer.stop();
     }
 
     @Override

@@ -44,6 +44,7 @@ public class winDoor extends Event {
             }
             if(jasonItem && fagotronsItem && joseItem) {
                 room.getGsm().setState(GameStateManager.STATE.WIN);
+                RoomState.mediaPlayer.stop();
             }
         }
     }
